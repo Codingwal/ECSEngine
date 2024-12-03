@@ -54,6 +54,10 @@ struct ComponentSet
             set.set(components[i].id, true);
         }
     }
+    bool HasComponents(ComponentSet &other) const
+    {
+        return (set & other.set) == set;
+    }
     friend inline bool operator==(const ComponentSet &lhs, const ComponentSet &rhs)
     {
         return lhs.set == rhs.set;

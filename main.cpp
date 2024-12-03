@@ -41,10 +41,10 @@ int main(int argc, char **argv)
     Entity e2 = world.entityManager.CreateEntity(posScl, 2);
     Entity e3 = world.entityManager.CreateEntity(posRot, 2);
 
-    Position *posPtr = (Position *)world.entityManager.GetComponentRef(e1, rotationType.id);
+    Position *posPtr = (Position *)world.entityManager.GetComponentRef(e3, rotationType.id);
     *posPtr = Position(10, 5, 3);
 
-    std::cout << (*(Position *)world.entityManager.GetComponentRef(e1, rotationType.id)).ToString() << "\n";
+    std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";

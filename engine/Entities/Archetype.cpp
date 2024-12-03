@@ -45,7 +45,7 @@ void *Archetype::GetData(Entity entity, ComponentID component) const
     int chunkIndex = row / ENTITIES_PER_CHUNK;
     int indexInChunk = row % ENTITIES_PER_CHUNK;
     auto &info = componentInfo.at(component);
-    int8_t posInChunk = info.startIndex + indexInChunk * info.size;
+    size_t posInChunk = info.startIndex + indexInChunk * info.size;
     std::cout << std::to_string(posInChunk) + "\n";
     return (char *)chunks.at(chunkIndex).data + posInChunk; // chunkPtr + posInChunk
 }
@@ -55,10 +55,10 @@ bool Archetype::HasComponent(ComponentID component) const noexcept
     return componentInfo.count(component);
 }
 
-// bool Archetype::HasComponents(ComponentSet components) const noexcept
-// {
-//
-// }
+bool Archetype::HasComponents(ComponentSet components) const noexcept
+{
+    return componentSet.HasComponents(components);
+}
 
 bool Archetype::Matches(ComponentSet components) const noexcept
 {
