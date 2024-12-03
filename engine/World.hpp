@@ -6,6 +6,7 @@
 class World
 {
 public:
+    World();
     EntityManager entityManager;
     ComponentManager componentManager;
 };

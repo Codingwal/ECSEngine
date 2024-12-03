@@ -18,7 +18,9 @@ Archetype::Archetype(ComponentType components[], int count)
 {
     componentSet = ComponentSet(components, count);
 
-    size_t pos = 0;
+    componentInfo.insert(std::pair(0, ComponentInfo(0, sizeof(Entity)))); // All entities must have the "Entity" component
+
+    size_t pos = sizeof(Entity) * ENTITIES_PER_CHUNK; // Start behind the "Entity" components
     for (int i = 0; i < count; i++)
     {
         auto &component = components[i];

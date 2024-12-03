@@ -49,6 +49,7 @@ struct ComponentSet
     ComponentSet() = default;
     ComponentSet(ComponentType *components, int size)
     {
+        set.set(0, true); // All entities have the "Entity" component
         for (int i = 0; i < size; i++)
         {
             set.set(components[i].id, true);

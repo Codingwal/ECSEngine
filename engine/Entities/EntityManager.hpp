@@ -8,7 +8,6 @@
 class EntityManager
 {
 public:
-    EntityManager() = default;
     Entity CreateEntity(ComponentType components[], int count);
     void DestroyEntity(Entity entity);
     void *GetComponentRef(Entity entity, ComponentID component) const;
