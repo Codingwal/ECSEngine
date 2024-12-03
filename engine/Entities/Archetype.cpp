@@ -77,6 +77,8 @@ void Archetype::RemoveEntity(Entity entity)
 
 void *Archetype::GetDataRef(Entity entity, ComponentID component) const
 {
+    assert(entityToRow.count(entity) && "The archetype does not contain the entity");
+    assert(componentInfo.count(component) && "The archetype does not contain the component");
     int row = entityToRow.at(entity);
     int chunkIndex = row / ENTITIES_PER_CHUNK;
     int indexInChunk = row % ENTITIES_PER_CHUNK;

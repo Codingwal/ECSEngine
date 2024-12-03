@@ -38,6 +38,10 @@ struct ComponentType
         id = other.id;
         size = other.size;
     }
+    friend bool operator==(const ComponentType &lhs, const ComponentType &rhs)
+    {
+        return lhs.id == rhs.id;
+    }
     std::string ToString()
     {
         return "Component: {id: " + std::to_string(id) + ", size: " + std::to_string(size) + "}";

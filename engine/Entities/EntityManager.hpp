@@ -14,7 +14,7 @@ public:
     Archetype &GetArchetype(Entity entity);
 
     void AddComponents(Entity entity, ComponentType components[], size_t count);
-    void RemoveComponent(Entity entity, ComponentID component);
+    void RemoveComponents(Entity entity, ComponentType components[], size_t count);
 
     std::string EntitiesToString() const;
     std::string ArchetypesToString() const;

@@ -13,18 +13,23 @@ int main(int argc, char **argv)
     ComponentType scaleType = world.componentManager.RegisterComponent<Scale>();
 
     ComponentType posRot[2] = {positionType, rotationType};
-    ComponentType scl[1] = {scaleType};
+    ComponentType pos[1] = {positionType};
 
     Entity e = world.entityManager.CreateEntity(posRot, 2);
 
-    *(Position *)world.entityManager.GetComponentRef(e, positionType.id) = Position(10, 5, 3); // SetComponentData(e, Position(10, 5, 3))
+    *(Rotation *)world.entityManager.GetComponentRef(e, rotationType.id) = Rotation(10, 5, 3); // SetComponentData(e, Rotation(10, 5, 3))
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";
 
-    world.entityManager.AddComponents(e, scl, 1);
+    world.entityManager.RemoveComponents(e, pos, 1);
 
-    std::cout << (*(Position *)world.entityManager.GetComponentRef(e, positionType.id)).ToString() << "\n"; // print(GetComponentData<Position>(e))
+    std::cout << "print\n";
+    std::cout << world.entityManager.EntitiesToString() << "\n";
+    std::cout << world.entityManager.ArchetypesToString() << "\n";
+
+    std::cout << "print(GetComponentData<Rotation>(e))\n";
+    std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e, rotationType.id)).ToString() << "\n"; // print(GetComponentData<Rotation>(e))
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";

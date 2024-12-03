@@ -57,8 +57,26 @@ void EntityManager::AddComponents(Entity entity, ComponentType components[], siz
 
     ChangeArchetype(entity, newArchetypeIndex);
 }
-void EntityManager::RemoveComponent(Entity entity, ComponentID component)
+void EntityManager::RemoveComponents(Entity entity, ComponentType components[], size_t count)
 {
+    // Get old components
+    Archetype &oldArchetype = GetArchetype(entity);
+    auto componentTypes = oldArchetype.GetComponentTypes();
+
+    // Remove all specified components
+    for (int i = 0; i < count; i++)
+    {
+        for (auto &c : componentTypes)
+        {
+            if (c == components[i])
+            {
+                componentTypes.erase(componentTypes.begin() + i);
+                break;
+            }
+        }
+    }
+    uint32_t newArchetypeIndex = GetOrCreateArchetype(componentTypes.data(), componentTypes.size());
+    ChangeArchetype(entity, newArchetypeIndex);
 }
 std::string EntityManager::ArchetypesToString() const
 {
