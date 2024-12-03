@@ -19,20 +19,14 @@ int main(int argc, char **argv)
     Entity e2 = world.entityManager.CreateEntity(posScl, 2);
     Entity e3 = world.entityManager.CreateEntity(posRot, 2);
 
-    *(Position *)world.entityManager.GetComponentRef(e1, positionType.id) = Position(10, 5, 3);
-    *(Rotation *)world.entityManager.GetComponentRef(e1, rotationType.id) = Rotation(1, 1, 1);
+    *(Position *)world.entityManager.GetComponentRef(e3, positionType.id) = Position(10, 5, 3);
 
-    // Copy data from e1 to e3
-    // world.entityManager.GetArchetype(e1).CopyEntityData(world.entityManager.GetArchetype(e3), e3, e1);
+    std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
 
-    // std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
-    // std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
+    world.entityManager.DestroyEntity(e1);
 
-    std::cout << world.entityManager.EntitiesToString() << "\n";
-    std::cout << world.entityManager.ArchetypesToString() << "\n";
+    std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
 
-    world.entityManager.DestroyEntity(e3);
-
-    std::cout << world.entityManager.EntitiesToString() << "\n";
-    std::cout << world.entityManager.ArchetypesToString() << "\n";
+    // std::cout << world.entityManager.EntitiesToString() << "\n";
+    // std::cout << world.entityManager.ArchetypesToString() << "\n";
 }

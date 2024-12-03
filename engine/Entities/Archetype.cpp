@@ -46,6 +46,7 @@ void Archetype::AddEntity(Entity entity)
     ArchetypeChunk &chunk = chunks[chunkIndex];
 
     entityToRow.insert(std::pair(entity, row));
+    *(Entity *)GetDataRef(entity, 0) = entity;
 }
 
 void Archetype::CopyEntityData(Archetype &destination, Entity destEntity, Entity srcEntity)
