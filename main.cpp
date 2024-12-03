@@ -12,6 +12,10 @@ struct Rotation
 {
     float x, y, z;
 };
+struct Scale
+{
+    float x, y, z;
+};
 int main(int argc, char **argv)
 {
     ComponentManager cm = ComponentManager();
@@ -19,10 +23,10 @@ int main(int argc, char **argv)
 
     ComponentType positionType = cm.RegisterComponent<Position>();
     ComponentType rotationType = cm.RegisterComponent<Rotation>();
+    ComponentType scaleType = cm.RegisterComponent<Scale>();
 
-    ComponentType components[2] = {positionType, rotationType};
+    ComponentType components[2] = {positionType, scaleType};
     Entity entity = em.CreateEntity(ComponentSet(components, 2));
 
-    std::cout << positionType.ToString() << "; " << rotationType.ToString() << "\n";
     std::cout << "Entity: " << entity.ToString() << "; Components: " << em.GetArchetype(entity).components.ToString() << "\n";
 }

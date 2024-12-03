@@ -1,2 +1,0 @@
-C:\msys64\ucrt64\bin\ar.exe qc libengine.a CMakeFiles/engine.dir/Entities/EntityManager.cpp.obj CMakeFiles/engine.dir/Components/ComponentManager.cpp.obj CMakeFiles/engine.dir/Entities/Archetype.cpp.obj
-C:\msys64\ucrt64\bin\ranlib.exe libengine.a
