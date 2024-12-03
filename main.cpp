@@ -6,6 +6,16 @@
 struct Position
 {
     float x, y, z;
+    Position(float _x, float _y, float _z)
+    {
+        x = _x;
+        y = _y;
+        z = _z;
+    }
+    std::string ToString()
+    {
+        return "Position: {" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "}";
+    }
 };
 struct Rotation
 {
@@ -27,9 +37,14 @@ int main(int argc, char **argv)
     ComponentType posScl[2] = {positionType, scaleType};
     ComponentType pos[1] = {positionType};
 
-    world.entityManager.CreateEntity(posRot, 2);
-    world.entityManager.CreateEntity(posScl, 2);
-    world.entityManager.CreateEntity(posRot, 2);
+    Entity e1 = world.entityManager.CreateEntity(posRot, 2);
+    Entity e2 = world.entityManager.CreateEntity(posScl, 2);
+    Entity e3 = world.entityManager.CreateEntity(posRot, 2);
+
+    Position *posPtr = (Position *)world.entityManager.GetComponentRef(e1, rotationType.id);
+    *posPtr = Position(10, 5, 3);
+
+    std::cout << (*(Position *)world.entityManager.GetComponentRef(e1, rotationType.id)).ToString() << "\n";
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";

@@ -1,8 +1,10 @@
 #include "EntityManager.hpp"
 #include <iostream>
+#include <cassert>
 
 Entity EntityManager::CreateEntity(ComponentType components[], int count)
 {
+    assert(entityCount < MAX_ENTITY_COUNT && "Invalid entity");
     Entity entity = Entity(entityCount++);
     int32_t archetypeIndex = GetOrCreateArchetype(components, count);
     archetypes[archetypeIndex].AddEntity(entity);
@@ -15,12 +17,21 @@ void EntityManager::DestroyEntity(Entity entity)
     entityToArchetype.erase(entity);
 }
 
+void *EntityManager::GetComponentRef(Entity entity, ComponentID component) const
+{
+    auto &archetype = archetypes[GetArchetypeIndex(entity)];
+    assert(archetype.componentInfo.count(component) && "The archetype does not contain this component");
+    return archetype.GetData(entity, component);
+}
+
 Archetype &EntityManager::GetArchetype(Entity entity)
 {
+    assert(entityToArchetype.count(entity) && "Invalid entity");
     return archetypes.at(entityToArchetype.at(entity));
 }
 uint32_t EntityManager::GetArchetypeIndex(Entity entity) const
 {
+    assert(entityToArchetype.count(entity) && "Invalid entity");
     return entityToArchetype.at(entity);
 }
 

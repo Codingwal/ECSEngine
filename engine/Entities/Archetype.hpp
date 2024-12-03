@@ -39,15 +39,16 @@ public:
     Archetype(ComponentType components[], int size);
     void AddEntity(Entity entity);
     void RemoveEntity(Entity entity);
+    void *GetData(Entity entity, ComponentID component) const;
 
     std::string ToString() const;
 
 public:
     ComponentSet componentSet;
+    std::map<ComponentID, ComponentInfo> componentInfo;
 
 private:
     std::vector<ArchetypeChunk> chunks;
-    std::map<ComponentID, ComponentInfo> componentInfo;
     std::map<Entity, int> entityToRow;
     size_t chunkSize;
 };

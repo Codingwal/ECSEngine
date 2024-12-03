@@ -1,6 +1,7 @@
 #include "Archetype.hpp"
 #include "../Core/Constants.hpp"
 #include <iostream>
+#include <cassert>
 
 Archetype::Archetype(ComponentType components[], int count)
 {
@@ -20,9 +21,9 @@ Archetype::Archetype(ComponentType components[], int count)
 
 void Archetype::AddEntity(Entity entity)
 {
-    int entityCount = entityToRow.size();
-    int chunkIndex = entityCount / ENTITIES_PER_CHUNK;
-    int indexInChunk = entityCount % ENTITIES_PER_CHUNK;
+    int row = entityToRow.size();
+    int chunkIndex = row / ENTITIES_PER_CHUNK;
+    int indexInChunk = row % ENTITIES_PER_CHUNK;
 
     // Create a new chunk if necessary
     if (chunkIndex >= chunks.size())
@@ -31,11 +32,22 @@ void Archetype::AddEntity(Entity entity)
     }
     ArchetypeChunk &chunk = chunks[chunkIndex];
 
-    entityToRow.insert(std::pair(entity, entityCount));
+    entityToRow.insert(std::pair(entity, row));
 }
 
 void Archetype::RemoveEntity(Entity entity)
 {
+}
+
+void *Archetype::GetData(Entity entity, ComponentID component) const
+{
+    int row = entityToRow.at(entity);
+    int chunkIndex = row / ENTITIES_PER_CHUNK;
+    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    auto &info = componentInfo.at(component);
+    int8_t posInChunk = info.startIndex + indexInChunk * info.size;
+    std::cout << std::to_string(posInChunk) + "\n";
+    return (char *)chunks.at(chunkIndex).data + posInChunk; // chunkPtr + posInChunk
 }
 
 std::string Archetype::ToString() const
