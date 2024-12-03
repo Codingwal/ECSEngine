@@ -3,14 +3,13 @@
 #include "../Core/Structs.hpp"
 #include <vector>
 #include <map>
-#include <malloc.h>
 
 struct ArchetypeChunk
 {
     void *data;
     ArchetypeChunk(size_t size)
     {
-        data = malloc(size);
+        data = calloc(size, sizeof(char));
     }
     ArchetypeChunk(ArchetypeChunk &&other)
     {
