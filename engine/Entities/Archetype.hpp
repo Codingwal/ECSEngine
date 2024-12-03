@@ -41,13 +41,16 @@ public:
     void RemoveEntity(Entity entity);
     void *GetData(Entity entity, ComponentID component) const;
 
+    bool HasComponent(ComponentID component) const noexcept;
+    bool HasComponents(ComponentSet components) const noexcept;
+    ComponentSet GetComponentSet() const noexcept { return componentSet; }
+    bool Matches(ComponentSet components) const noexcept;
+
     std::string ToString() const;
 
-public:
+private:
     ComponentSet componentSet;
     std::map<ComponentID, ComponentInfo> componentInfo;
-
-private:
     std::vector<ArchetypeChunk> chunks;
     std::map<Entity, int> entityToRow;
     size_t chunkSize;

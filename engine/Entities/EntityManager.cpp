@@ -20,7 +20,7 @@ void EntityManager::DestroyEntity(Entity entity)
 void *EntityManager::GetComponentRef(Entity entity, ComponentID component) const
 {
     auto &archetype = archetypes[GetArchetypeIndex(entity)];
-    assert(archetype.componentInfo.count(component) && "The archetype does not contain this component");
+    assert(archetype.HasComponent(component) && "The archetype does not contain this component");
     return archetype.GetData(entity, component);
 }
 
@@ -42,7 +42,7 @@ std::string EntityManager::EntitiesToString() const
     {
         string.append(pair.first.ToString());
         string.append(": ");
-        string.append(archetypes.at(pair.second).componentSet.ToString());
+        string.append(archetypes.at(pair.second).GetComponentSet().ToString());
         string.append("\n");
     }
     return string;
@@ -62,7 +62,7 @@ uint32_t EntityManager::GetOrCreateArchetype(ComponentType components[], int cou
     ComponentSet set = ComponentSet(components, count);
     for (int i = 0; i < archetypes.size(); i++)
     {
-        if (archetypes[i].componentSet == set)
+        if (archetypes[i].Matches(set))
         {
             return i;
         }

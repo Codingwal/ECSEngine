@@ -50,6 +50,21 @@ void *Archetype::GetData(Entity entity, ComponentID component) const
     return (char *)chunks.at(chunkIndex).data + posInChunk; // chunkPtr + posInChunk
 }
 
+bool Archetype::HasComponent(ComponentID component) const noexcept
+{
+    return componentInfo.count(component);
+}
+
+// bool Archetype::HasComponents(ComponentSet components) const noexcept
+// {
+//
+// }
+
+bool Archetype::Matches(ComponentSet components) const noexcept
+{
+    return components == componentSet;
+}
+
 std::string Archetype::ToString() const
 {
     return "Archetype: {chunkSize: " + std::to_string(chunkSize) + ", chunkCount: " + std::to_string(chunks.size()) + ", entityCount: " + std::to_string(entityToRow.size()) + ", componentSet: " + componentSet.ToString() + "}";
