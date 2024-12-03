@@ -12,26 +12,37 @@ struct ArchetypeChunk
     {
         data = malloc(size);
     }
+    ArchetypeChunk(ArchetypeChunk &&other)
+    {
+        data = other.data;
+        other.data = nullptr;
+    }
     ~ArchetypeChunk()
     {
-        free(data);
+        if (data)
+            free(data);
     }
 };
 struct ComponentInfo
 {
-    size_t size;
     int startIndex;
+    size_t size;
+    ComponentInfo(int _startIndex, size_t _size)
+    {
+        startIndex = _startIndex;
+        size = _size;
+    }
 };
 class Archetype
 {
 public:
-    Archetype(ComponentSet components);
+    Archetype(ComponentType components[], int size);
     void AddEntity(Entity entity);
     void RemoveEntity(Entity entity);
 
 public:
-    ComponentSet components;
+    ComponentSet componentSet;
     std::vector<ArchetypeChunk> chunks;
-    std::map<ComponentType, ComponentInfo> componentInfo;
+    std::map<int, ComponentInfo> componentInfo; // map<ComponentType.id, ComponentInfo>
     std::map<Entity, int> entityToRow;
 };

@@ -23,11 +23,12 @@ int main(int argc, char **argv)
     ComponentType rotationType = world.componentManager.RegisterComponent<Rotation>();
     ComponentType scaleType = world.componentManager.RegisterComponent<Scale>();
 
-    ComponentType components[2] = {positionType, scaleType};
+    ComponentType posRot[2] = {positionType, rotationType};
+    ComponentType posScl[2] = {positionType, scaleType};
 
-    world.entityManager.CreateEntity(ComponentSet(components, 2));
-    world.entityManager.CreateEntity(ComponentSet(components, 1));
-    world.entityManager.CreateEntity(ComponentSet(components, 2));
+    world.entityManager.CreateEntity(posRot, 2);
+    world.entityManager.CreateEntity(posScl, 2);
+    world.entityManager.CreateEntity(posRot, 2);
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
 }

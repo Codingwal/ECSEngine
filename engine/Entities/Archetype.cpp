@@ -1,10 +1,22 @@
 #include "Archetype.hpp"
+#include "../Core/Constants.hpp"
+#include <iostream>
 
-Archetype::Archetype(ComponentSet _components)
+Archetype::Archetype(ComponentType components[], int count)
 {
-    components = _components;
+    componentSet = ComponentSet(components, count);
 
-    // chunks.push_back(ArchetypeChunk
+    size_t pos = 0;
+    for (int i = 0; i < count; i++)
+    {
+        auto &component = components[i];
+        componentInfo.insert(std::pair(component.id, ComponentInfo(pos, component.size)));
+        pos += component.size * ENTITIES_PER_CHUNK;
+    }
+
+    chunks.push_back(ArchetypeChunk(pos));
+
+    std::cout << "Chunk size: " << pos << "\n";
 }
 
 void Archetype::AddEntity(Entity entity)

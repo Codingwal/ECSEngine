@@ -1,18 +1,29 @@
 #include "ComponentManager.hpp"
 #include <cassert>
 
-ComponentType ComponentManager::RegisterComponentInternal(const char *name)
+ComponentType ComponentManager::GetComponentType(int id) const
+{
+    for (const std::pair<const char *const, ComponentType> &pair : registeredComponents)
+    {
+        if (pair.second.id == id)
+        {
+            return pair.second;
+        }
+    }
+}
+
+ComponentType ComponentManager::RegisterComponentInternal(const char *name, size_t size)
 {
     // Skip already registered components
     if (registeredComponents.count(name))
         return GetComponentTypeInternal(name);
 
-    ComponentType type = ComponentType(highestComponentId++);
+    ComponentType type = ComponentType(highestComponentId++, size);
     registeredComponents.insert(std::pair(name, type));
     return type;
 }
-ComponentType ComponentManager::GetComponentTypeInternal(const char *name)
+ComponentType ComponentManager::GetComponentTypeInternal(const char *name) const
 {
     assert(registeredComponents.count(name) && "Component has not been registered");
-    return registeredComponents[name];
+    return registeredComponents.at(name);
 }

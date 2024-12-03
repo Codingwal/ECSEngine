@@ -12,18 +12,18 @@ public:
     template <typename T>
     ComponentType RegisterComponent()
     {
-        auto name = typeid(T).name();
-        return RegisterComponentInternal(name);
+        return RegisterComponentInternal(typeid(T).name(), sizeof(T));
     }
     template <typename T>
-    ComponentType GetComponentType()
+    ComponentType GetComponentType() const
     {
         return GetComponentTypeInternal(typeid(T).name());
     }
+    ComponentType GetComponentType(int id) const;
 
 private:
-    ComponentType RegisterComponentInternal(const char *name);
-    ComponentType GetComponentTypeInternal(const char *name);
+    ComponentType RegisterComponentInternal(const char *name, size_t size);
+    ComponentType GetComponentTypeInternal(const char *name) const;
 
 private:
     int highestComponentId;

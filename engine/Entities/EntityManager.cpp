@@ -1,10 +1,10 @@
 #include "EntityManager.hpp"
 #include <iostream>
 
-Entity EntityManager::CreateEntity(ComponentSet components)
+Entity EntityManager::CreateEntity(ComponentType components[], int count)
 {
     Entity entity = Entity(entityCount++);
-    Archetype &archetype = GetOrCreateArchetype(components);
+    Archetype &archetype = GetOrCreateArchetype(components, count);
     archetype.AddEntity(entity);
     entityToArchetype.insert(std::pair<Entity, uint32_t>(entity, archetypes.size() - 1));
     return entity;
@@ -31,22 +31,23 @@ std::string EntityManager::EntitiesToString() const
     {
         string.append(pair.first.ToString());
         string.append(": ");
-        string.append(archetypes.at(pair.second).components.ToString());
+        string.append(archetypes.at(pair.second).componentSet.ToString());
         string.append("\n");
     }
     return string;
 }
 
-Archetype &EntityManager::GetOrCreateArchetype(ComponentSet components)
+Archetype &EntityManager::GetOrCreateArchetype(ComponentType components[], int count)
 {
+    ComponentSet set = ComponentSet(components, count);
     for (auto &archetype : archetypes)
     {
-        if (archetype.components == components)
+        if (archetype.componentSet == set)
         {
             return archetype;
         }
     }
-    Archetype archetype = Archetype(components);
-    archetypes.push_back(archetype);
+
+    archetypes.push_back(Archetype(components, count));
     return archetypes.at(archetypes.size() - 1);
 }

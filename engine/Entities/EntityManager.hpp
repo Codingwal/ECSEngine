@@ -9,13 +9,13 @@ class EntityManager
 {
 public:
     EntityManager() = default;
-    Entity CreateEntity(ComponentSet components);
+    Entity CreateEntity(ComponentType components[], int count);
     void DestroyEntity(Entity entity);
     Archetype &GetArchetype(Entity entity);
     std::string EntitiesToString() const;
 
 private:
-    Archetype &GetOrCreateArchetype(ComponentSet components);
+    Archetype &GetOrCreateArchetype(ComponentType components[], int count);
     uint32_t GetArchetypeIndex(Entity entity) const;
 
 private:

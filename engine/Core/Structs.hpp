@@ -25,18 +25,21 @@ struct Entity
 struct ComponentType
 {
     int8_t id;
+    size_t size;
     ComponentType() = default;
-    ComponentType(int _id)
+    ComponentType(int8_t _id, size_t _size)
     {
         id = _id;
+        size = _size;
     }
     ComponentType(const ComponentType &other)
     {
         id = other.id;
+        size = other.size;
     }
     std::string ToString()
     {
-        return std::to_string(id);
+        return "Component: {id: " + std::to_string(id) + ", size: " + std::to_string(size) + "}";
     }
 };
 struct ComponentSet
