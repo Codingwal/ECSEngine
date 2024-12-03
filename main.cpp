@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Core/Structs.hpp"
-#include "Components/ComponentManager.hpp"
-#include "Entities/EntityManager.hpp"
+#include "World.hpp"
 
 struct Position
 {
@@ -18,15 +17,20 @@ struct Scale
 };
 int main(int argc, char **argv)
 {
-    ComponentManager cm = ComponentManager();
-    EntityManager em = EntityManager();
+    World world = World();
 
-    ComponentType positionType = cm.RegisterComponent<Position>();
-    ComponentType rotationType = cm.RegisterComponent<Rotation>();
-    ComponentType scaleType = cm.RegisterComponent<Scale>();
+    ComponentType positionType = world.componentManager.RegisterComponent<Position>();
+    ComponentType rotationType = world.componentManager.RegisterComponent<Rotation>();
+    ComponentType scaleType = world.componentManager.RegisterComponent<Scale>();
 
     ComponentType components[2] = {positionType, scaleType};
-    Entity entity = em.CreateEntity(ComponentSet(components, 2));
 
-    std::cout << "Entity: " << entity.ToString() << "; Components: " << em.GetArchetype(entity).components.ToString() << "\n";
+    world.entityManager.CreateEntity(ComponentSet(components, 2));
+    // std::cout << world.entityManager.EntitiesToString() << "\n";
+
+    world.entityManager.CreateEntity(ComponentSet(components, 1));
+    // std::cout << world.entityManager.EntitiesToString()<< "\n";
+
+    world.entityManager.CreateEntity(ComponentSet(components, 2));
+    // std::cout << world.entityManager.EntitiesToString()<< "\n";
 }

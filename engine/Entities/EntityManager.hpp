@@ -11,7 +11,8 @@ public:
     EntityManager() = default;
     Entity CreateEntity(ComponentSet components);
     void DestroyEntity(Entity entity);
-    Archetype &GetArchetype(Entity entity);
+    Archetype &GetArchetype(Entity entity) const;
+    std::string EntitiesToString() const;
 
 private:
     Archetype &GetOrCreateArchetype(ComponentSet components);

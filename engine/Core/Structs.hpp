@@ -13,11 +13,11 @@ struct Entity
     {
         id = _id;
     }
-    friend bool operator<(const Entity &lhs, const Entity &rhs)
+    friend const bool operator<(const Entity &lhs, const Entity &rhs)
     {
         return lhs.id < rhs.id;
     }
-    std::string ToString()
+    std::string ToString() const
     {
         return std::to_string(id);
     }
