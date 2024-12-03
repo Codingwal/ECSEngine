@@ -14,6 +14,7 @@ public:
     Archetype &GetArchetype(Entity entity);
 
     std::string EntitiesToString() const;
+    std::string ArchetypesToString() const;
 
 private:
     uint32_t GetOrCreateArchetype(ComponentType components[], int count);

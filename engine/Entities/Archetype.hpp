@@ -40,9 +40,14 @@ public:
     void AddEntity(Entity entity);
     void RemoveEntity(Entity entity);
 
+    std::string ToString() const;
+
 public:
     ComponentSet componentSet;
+
+private:
     std::vector<ArchetypeChunk> chunks;
     std::map<int, ComponentInfo> componentInfo; // map<ComponentType.id, ComponentInfo>
     std::map<Entity, int> entityToRow;
+    size_t chunkSize;
 };

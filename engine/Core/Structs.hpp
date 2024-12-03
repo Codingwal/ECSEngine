@@ -19,7 +19,7 @@ struct Entity
     }
     std::string ToString() const
     {
-        return std::to_string(id);
+        return "Entity: {id: " + std::to_string(id) + "}";
     }
 };
 struct ComponentType

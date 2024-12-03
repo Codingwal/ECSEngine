@@ -16,7 +16,7 @@ Archetype::Archetype(ComponentType components[], int count)
 
     chunks.push_back(ArchetypeChunk(pos));
 
-    std::cout << "Chunk size: " << pos << " bytes\n";
+    chunkSize = pos;
 }
 
 void Archetype::AddEntity(Entity entity)
@@ -25,4 +25,9 @@ void Archetype::AddEntity(Entity entity)
 
 void Archetype::RemoveEntity(Entity entity)
 {
+}
+
+std::string Archetype::ToString() const
+{
+    return "Archetype: {chunkSize: " + std::to_string(chunkSize) + ", entityCount: " + std::to_string(entityToRow.size()) + ", componentSet: " + componentSet.ToString() + "}";
 }

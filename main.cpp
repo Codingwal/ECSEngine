@@ -32,4 +32,5 @@ int main(int argc, char **argv)
     world.entityManager.CreateEntity(posRot, 2);
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
+    std::cout << world.entityManager.ArchetypesToString() << "\n";
 }
