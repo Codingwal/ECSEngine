@@ -25,6 +25,7 @@ int main(int argc, char **argv)
 
     ComponentType posRot[2] = {positionType, rotationType};
     ComponentType posScl[2] = {positionType, scaleType};
+    ComponentType pos[1] = {positionType};
 
     world.entityManager.CreateEntity(posRot, 2);
     world.entityManager.CreateEntity(posScl, 2);

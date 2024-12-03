@@ -4,9 +4,9 @@
 Entity EntityManager::CreateEntity(ComponentType components[], int count)
 {
     Entity entity = Entity(entityCount++);
-    Archetype &archetype = GetOrCreateArchetype(components, count);
-    archetype.AddEntity(entity);
-    entityToArchetype.insert(std::pair<Entity, uint32_t>(entity, archetypes.size() - 1));
+    int32_t archetypeIndex = GetOrCreateArchetype(components, count);
+    archetypes[archetypeIndex].AddEntity(entity);
+    entityToArchetype.insert(std::pair<Entity, uint32_t>(entity, archetypeIndex));
     return entity;
 }
 void EntityManager::DestroyEntity(Entity entity)
@@ -26,7 +26,7 @@ uint32_t EntityManager::GetArchetypeIndex(Entity entity) const
 
 std::string EntityManager::EntitiesToString() const
 {
-    std::string string = "";
+    std::string string = "Entities: (<ID>: <ComponentSet>)";
     for (const std::pair<const Entity, uint32_t> &pair : entityToArchetype)
     {
         string.append(pair.first.ToString());
@@ -37,17 +37,17 @@ std::string EntityManager::EntitiesToString() const
     return string;
 }
 
-Archetype &EntityManager::GetOrCreateArchetype(ComponentType components[], int count)
+uint32_t EntityManager::GetOrCreateArchetype(ComponentType components[], int count)
 {
     ComponentSet set = ComponentSet(components, count);
-    for (auto &archetype : archetypes)
+    for (int i = 0; i < archetypes.size(); i++)
     {
-        if (archetype.componentSet == set)
+        if (archetypes[i].componentSet == set)
         {
-            return archetype;
+            return i;
         }
     }
 
     archetypes.push_back(Archetype(components, count));
-    return archetypes.at(archetypes.size() - 1);
+    return archetypes.size() - 1;
 }

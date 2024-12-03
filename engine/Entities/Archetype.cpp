@@ -16,7 +16,7 @@ Archetype::Archetype(ComponentType components[], int count)
 
     chunks.push_back(ArchetypeChunk(pos));
 
-    std::cout << "Chunk size: " << pos << "\n";
+    std::cout << "Chunk size: " << pos << " bytes\n";
 }
 
 void Archetype::AddEntity(Entity entity)

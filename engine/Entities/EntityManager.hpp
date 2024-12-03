@@ -12,10 +12,11 @@ public:
     Entity CreateEntity(ComponentType components[], int count);
     void DestroyEntity(Entity entity);
     Archetype &GetArchetype(Entity entity);
+
     std::string EntitiesToString() const;
 
 private:
-    Archetype &GetOrCreateArchetype(ComponentType components[], int count);
+    uint32_t GetOrCreateArchetype(ComponentType components[], int count);
     uint32_t GetArchetypeIndex(Entity entity) const;
 
 private:
