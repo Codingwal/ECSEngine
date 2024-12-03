@@ -47,7 +47,7 @@ public:
 
 private:
     std::vector<ArchetypeChunk> chunks;
-    std::map<int, ComponentInfo> componentInfo; // map<ComponentType.id, ComponentInfo>
+    std::map<ComponentID, ComponentInfo> componentInfo;
     std::map<Entity, int> entityToRow;
     size_t chunkSize;
 };

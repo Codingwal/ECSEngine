@@ -1,7 +1,7 @@
 #include "ComponentManager.hpp"
 #include <cassert>
 
-ComponentType ComponentManager::GetComponentType(int id) const
+ComponentType ComponentManager::GetComponentType(ComponentID id) const
 {
     for (const std::pair<const char *const, ComponentType> &pair : registeredComponents)
     {
@@ -10,6 +10,7 @@ ComponentType ComponentManager::GetComponentType(int id) const
             return pair.second;
         }
     }
+    assert(false && "Invalid ComponentID");
 }
 
 ComponentType ComponentManager::RegisterComponentInternal(const char *name, size_t size)

@@ -19,7 +19,7 @@ public:
     {
         return GetComponentTypeInternal(typeid(T).name());
     }
-    ComponentType GetComponentType(int id) const;
+    ComponentType GetComponentType(ComponentID id) const;
 
 private:
     ComponentType RegisterComponentInternal(const char *name, size_t size);

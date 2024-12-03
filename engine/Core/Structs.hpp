@@ -22,12 +22,13 @@ struct Entity
         return "Entity: {id: " + std::to_string(id) + "}";
     }
 };
+using ComponentID = int8_t;
 struct ComponentType
 {
-    int8_t id;
+    ComponentID id;
     size_t size;
     ComponentType() = default;
-    ComponentType(int8_t _id, size_t _size)
+    ComponentType(ComponentID _id, size_t _size)
     {
         id = _id;
         size = _size;
