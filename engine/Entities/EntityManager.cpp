@@ -66,15 +66,16 @@ void EntityManager::RemoveComponents(Entity entity, ComponentType components[], 
     // Remove all specified components
     for (int i = 0; i < count; i++)
     {
-        for (auto &c : componentTypes)
+        for (int j = 0; j < componentTypes.size(); j++)
         {
-            if (c == components[i])
+            if (components[i] == componentTypes[j])
             {
-                componentTypes.erase(componentTypes.begin() + i);
+                componentTypes.erase(componentTypes.begin() + j);
                 break;
             }
         }
     }
+
     uint32_t newArchetypeIndex = GetOrCreateArchetype(componentTypes.data(), componentTypes.size());
     ChangeArchetype(entity, newArchetypeIndex);
 }
