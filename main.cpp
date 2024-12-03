@@ -2,29 +2,8 @@
 #include <iostream>
 #include "Core/Structs.hpp"
 #include "World.hpp"
+#include "Components.hpp"
 
-struct Position
-{
-    float x, y, z;
-    Position(float _x, float _y, float _z)
-    {
-        x = _x;
-        y = _y;
-        z = _z;
-    }
-    std::string ToString()
-    {
-        return "Position: {" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + "}";
-    }
-};
-struct Rotation
-{
-    float x, y, z;
-};
-struct Scale
-{
-    float x, y, z;
-};
 int main(int argc, char **argv)
 {
     World world = World();
@@ -35,23 +14,19 @@ int main(int argc, char **argv)
 
     ComponentType posRot[2] = {positionType, rotationType};
     ComponentType posScl[2] = {positionType, scaleType};
-    ComponentType pos[1] = {positionType};
 
     Entity e1 = world.entityManager.CreateEntity(posRot, 2);
     Entity e2 = world.entityManager.CreateEntity(posScl, 2);
     Entity e3 = world.entityManager.CreateEntity(posRot, 2);
 
-    Position *posPtr = (Position *)world.entityManager.GetComponentRef(e1, positionType.id);
-    *posPtr = Position(10, 5, 3);
-
-    Position *rotPtr = (Position *)world.entityManager.GetComponentRef(e1, rotationType.id);
-    *rotPtr = Position(1, 1, 1);
+    *(Position *)world.entityManager.GetComponentRef(e1, positionType.id) = Position(10, 5, 3);
+    *(Rotation *)world.entityManager.GetComponentRef(e1, rotationType.id) = Rotation(1, 1, 1);
 
     // Copy data from e1 to e3
     world.entityManager.GetArchetype(e1).CopyEntityData(world.entityManager.GetArchetype(e3), e3, e1);
 
     std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
-    std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
+    std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";
