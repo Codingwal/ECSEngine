@@ -26,11 +26,8 @@ int main(int argc, char **argv)
     ComponentType components[2] = {positionType, scaleType};
 
     world.entityManager.CreateEntity(ComponentSet(components, 2));
-    // std::cout << world.entityManager.EntitiesToString() << "\n";
-
     world.entityManager.CreateEntity(ComponentSet(components, 1));
-    // std::cout << world.entityManager.EntitiesToString()<< "\n";
-
     world.entityManager.CreateEntity(ComponentSet(components, 2));
-    // std::cout << world.entityManager.EntitiesToString()<< "\n";
+
+    std::cout << world.entityManager.EntitiesToString() << "\n";
 }

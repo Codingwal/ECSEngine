@@ -54,7 +54,7 @@ struct ComponentSet
     {
         return lhs.set == rhs.set;
     }
-    std::string ToString()
+    std::string ToString() const
     {
         return set.to_string();
     }
