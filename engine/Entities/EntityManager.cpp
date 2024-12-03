@@ -47,6 +47,19 @@ std::string EntityManager::EntitiesToString() const
     }
     return string;
 }
+void EntityManager::AddComponents(Entity entity, ComponentType components[], size_t count)
+{
+    // Create or get an archetype with all required components
+    Archetype &oldArchetype = GetArchetype(entity);
+    auto componentTypes = oldArchetype.GetComponentTypes();
+    componentTypes.insert(componentTypes.end(), components, components + count); // Append the new components
+    uint32_t newArchetypeIndex = GetOrCreateArchetype(componentTypes.data(), componentTypes.size());
+
+    ChangeArchetype(entity, newArchetypeIndex);
+}
+void EntityManager::RemoveComponent(Entity entity, ComponentID component)
+{
+}
 std::string EntityManager::ArchetypesToString() const
 {
     std::string string = "Archetypes:\n";
@@ -55,6 +68,16 @@ std::string EntityManager::ArchetypesToString() const
         string += archetype.ToString() + "\n";
     }
     return string;
+}
+
+void EntityManager::ChangeArchetype(Entity entity, uint32_t newArchetypeIndex)
+{
+    Archetype &oldArchetype = GetArchetype(entity);
+    Archetype &newArchetype = archetypes[newArchetypeIndex];
+    newArchetype.AddEntity(entity);
+    oldArchetype.CopyEntityData(newArchetype, entity, entity);
+    oldArchetype.RemoveEntity(entity);
+    entityToArchetype[entity] = newArchetypeIndex;
 }
 
 uint32_t EntityManager::GetOrCreateArchetype(ComponentType components[], int count)

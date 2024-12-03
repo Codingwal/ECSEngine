@@ -43,8 +43,9 @@ public:
 
     bool HasComponent(ComponentID component) const noexcept;
     bool HasComponents(ComponentSet components) const noexcept;
-    ComponentSet GetComponentSet() const noexcept { return componentSet; }
     bool Matches(ComponentSet components) const noexcept;
+    ComponentSet GetComponentSet() const noexcept { return componentSet; }
+    std::vector<ComponentType> GetComponentTypes() const noexcept;
 
     int EntityCount() const { return entityToRow.size(); }
     std::string ToString() const;

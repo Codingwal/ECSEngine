@@ -100,6 +100,16 @@ bool Archetype::Matches(ComponentSet components) const noexcept
     return components == componentSet;
 }
 
+std::vector<ComponentType> Archetype::GetComponentTypes() const noexcept
+{
+    std::vector<ComponentType> components;
+    for (auto &pair : componentInfo)
+    {
+        components.push_back(ComponentType(pair.first, pair.second.size));
+    }
+    return components;
+}
+
 std::string Archetype::ToString() const
 {
     return "Archetype: {chunkSize: " + std::to_string(chunkSize) + ", chunkCount: " + std::to_string(chunks.size()) + ", entityCount: " + std::to_string(EntityCount()) + ", componentSet: " + componentSet.ToString() + "}";
