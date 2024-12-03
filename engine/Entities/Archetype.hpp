@@ -38,6 +38,7 @@ class Archetype
 public:
     Archetype(ComponentType components[], int size);
     void AddEntity(Entity entity);
+    void CopyEntityData(Entity entity, Archetype &destination);
     void RemoveEntity(Entity entity);
     void *GetData(Entity entity, ComponentID component) const;
 
