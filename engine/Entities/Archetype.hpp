@@ -38,9 +38,9 @@ class Archetype
 public:
     Archetype(ComponentType components[], int size);
     void AddEntity(Entity entity);
-    void CopyEntityData(Entity entity, Archetype &destination);
+    void CopyEntityData(Archetype &destination, Entity destEntity, Entity srcEntity);
     void RemoveEntity(Entity entity);
-    void *GetData(Entity entity, ComponentID component) const;
+    void *GetDataRef(Entity entity, ComponentID component) const;
 
     bool HasComponent(ComponentID component) const noexcept;
     bool HasComponents(ComponentSet components) const noexcept;

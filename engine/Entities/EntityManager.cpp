@@ -21,7 +21,7 @@ void *EntityManager::GetComponentRef(Entity entity, ComponentID component) const
 {
     auto &archetype = archetypes[GetArchetypeIndex(entity)];
     assert(archetype.HasComponent(component) && "The archetype does not contain this component");
-    return archetype.GetData(entity, component);
+    return archetype.GetDataRef(entity, component);
 }
 
 Archetype &EntityManager::GetArchetype(Entity entity)

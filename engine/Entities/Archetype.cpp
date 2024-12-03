@@ -11,9 +11,7 @@ struct EntityInfo
 EntityInfo GetEntityInfo(const std::map<Entity, int> &entityToRow, Entity entity)
 {
     EntityInfo info;
-    int row = entityToRow.at(entity);
-    info.chunkIndex = row / ENTITIES_PER_CHUNK;
-    info.indexInChunk = row % ENTITIES_PER_CHUNK;
+
     return info;
 }
 Archetype::Archetype(ComponentType components[], int count)
@@ -48,21 +46,15 @@ void Archetype::AddEntity(Entity entity)
     entityToRow.insert(std::pair(entity, row));
 }
 
-void Archetype::CopyEntityData(Entity entity, Archetype &dest)
+void Archetype::CopyEntityData(Archetype &destination, Entity destEntity, Entity srcEntity)
 {
-    EntityInfo info = GetEntityInfo(entityToRow, entity);
-    EntityInfo otherInfo = GetEntityInfo(dest.entityToRow, entity);
-
     for (const auto &pair : componentInfo)
     {
-        if (dest.HasComponent(pair.first))
+        if (destination.HasComponent(pair.first))
         {
-            auto &cInfo = pair.second;
-            size_t posInChunk = cInfo.startIndex + info.indexInChunk * cInfo.size;
-            auto &otherCInfo = dest.componentInfo.at(pair.first);
-            size_t otherPosInChunk = otherCInfo.startIndex + otherInfo.indexInChunk * otherCInfo.size;
-
-            memcpy()
+            void *src = GetDataRef(srcEntity, pair.first);
+            void *dest = destination.GetDataRef(destEntity, pair.first);
+            memcpy(dest, src, pair.second.size);
         }
     }
 }
@@ -71,12 +63,14 @@ void Archetype::RemoveEntity(Entity entity)
 {
 }
 
-void *Archetype::GetData(Entity entity, ComponentID component) const
+void *Archetype::GetDataRef(Entity entity, ComponentID component) const
 {
-    EntityInfo info = GetEntityInfo(entityToRow, entity);
-    auto &cInfo = componentInfo.at(component);
-    size_t posInChunk = cInfo.startIndex + info.indexInChunk * cInfo.size;
-    return (char *)chunks.at(info.chunkIndex).data + posInChunk; // chunkPtr + posInChunk
+    int row = entityToRow.at(entity);
+    int chunkIndex = row / ENTITIES_PER_CHUNK;
+    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    auto &info = componentInfo.at(component);
+    size_t posInChunk = info.startIndex + indexInChunk * info.size;
+    return (char *)chunks.at(chunkIndex).data + posInChunk; // chunkPtr + posInChunk
 }
 
 bool Archetype::HasComponent(ComponentID component) const noexcept
