@@ -63,10 +63,11 @@ void Archetype::CopyEntityData(Archetype &destination, Entity destEntity, Entity
 
 void Archetype::RemoveEntity(Entity entity)
 {
-    if (!(entityToRow.at(entity) == entityToRow.size() - 1)) // If this is not the last entity
+    if (!(entityToRow.at(entity) == EntityCount() - 1)) // If this is not the last entity
     {
-        assert(false);
-        Entity other = NULL;
+        size_t posInChunk = (EntityCount() - 1) % ENTITIES_PER_CHUNK * sizeof(Entity); // lastEntityIndex % ENTITIES_PER_CHUNK * sizeof(Entity)
+        void *otherPtr = (char *)chunks[chunks.size() - 1].data + posInChunk;          // ptrToLastChunk + posInChunk
+        Entity other = *(Entity *)otherPtr;
         CopyEntityData(*this, entity, other);        // Copy other's data into entity's memory
         entityToRow[other] = entityToRow.at(entity); // Update other's location in memory
     }

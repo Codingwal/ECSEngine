@@ -7,8 +7,6 @@
 class ComponentManager
 {
 public:
-    ComponentManager() = default;
-
     template <typename T>
     ComponentType RegisterComponent()
     {
@@ -26,6 +24,6 @@ private:
     ComponentType GetComponentTypeInternal(const char *name) const;
 
 private:
-    int highestComponentId;
+    int highestComponentId = 0;
     std::map<const char *, ComponentType> registeredComponents;
 };

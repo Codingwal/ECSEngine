@@ -1,5 +1,6 @@
 #include "ComponentManager.hpp"
 #include <cassert>
+#include <iostream>
 
 ComponentType ComponentManager::GetComponentType(ComponentID id) const
 {

@@ -23,10 +23,10 @@ int main(int argc, char **argv)
     *(Rotation *)world.entityManager.GetComponentRef(e1, rotationType.id) = Rotation(1, 1, 1);
 
     // Copy data from e1 to e3
-    world.entityManager.GetArchetype(e1).CopyEntityData(world.entityManager.GetArchetype(e3), e3, e1);
+    // world.entityManager.GetArchetype(e1).CopyEntityData(world.entityManager.GetArchetype(e3), e3, e1);
 
-    std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
-    std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
+    // std::cout << (*(Position *)world.entityManager.GetComponentRef(e3, positionType.id)).ToString() << "\n";
+    // std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e3, rotationType.id)).ToString() << "\n";
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";

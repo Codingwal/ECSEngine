@@ -1,4 +1,4 @@
-add_library(engine STATIC Entities/EntityManager.cpp Components/ComponentManager.cpp Entities/Archetype.cpp)
+add_library(engine STATIC Entities/EntityManager.cpp Components/ComponentManager.cpp Entities/Archetype.cpp World.cpp)
 
 target_include_directories(engine
     INTERFACE

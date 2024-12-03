@@ -21,7 +21,7 @@ private:
     uint32_t GetArchetypeIndex(Entity entity) const;
 
 private:
-    int entityCount;
+    int entityCount = 0;
     std::vector<Archetype> archetypes;
     std::map<Entity, uint32_t> entityToArchetype;
 };
