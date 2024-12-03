@@ -61,6 +61,14 @@ void Archetype::CopyEntityData(Archetype &destination, Entity destEntity, Entity
 
 void Archetype::RemoveEntity(Entity entity)
 {
+    if (!(entityToRow.at(entity) == entityToRow.size() - 1)) // If this is not the last entity
+    {
+        assert(false);
+        Entity other = NULL;
+        CopyEntityData(*this, entity, other);        // Copy other's data into entity's memory
+        entityToRow[other] = entityToRow.at(entity); // Update other's location in memory
+    }
+    entityToRow.erase(entity); // Remove this entity (this also decrements the entity count)
 }
 
 void *Archetype::GetDataRef(Entity entity, ComponentID component) const
@@ -90,5 +98,5 @@ bool Archetype::Matches(ComponentSet components) const noexcept
 
 std::string Archetype::ToString() const
 {
-    return "Archetype: {chunkSize: " + std::to_string(chunkSize) + ", chunkCount: " + std::to_string(chunks.size()) + ", entityCount: " + std::to_string(entityToRow.size()) + ", componentSet: " + componentSet.ToString() + "}";
+    return "Archetype: {chunkSize: " + std::to_string(chunkSize) + ", chunkCount: " + std::to_string(chunks.size()) + ", entityCount: " + std::to_string(EntityCount()) + ", componentSet: " + componentSet.ToString() + "}";
 }

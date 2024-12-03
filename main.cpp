@@ -30,4 +30,9 @@ int main(int argc, char **argv)
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";
+
+    world.entityManager.DestroyEntity(e3);
+
+    std::cout << world.entityManager.EntitiesToString() << "\n";
+    std::cout << world.entityManager.ArchetypesToString() << "\n";
 }

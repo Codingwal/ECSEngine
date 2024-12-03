@@ -47,6 +47,7 @@ public:
     ComponentSet GetComponentSet() const noexcept { return componentSet; }
     bool Matches(ComponentSet components) const noexcept;
 
+    int EntityCount() const { return entityToRow.size(); }
     std::string ToString() const;
 
 private:
