@@ -15,21 +15,17 @@ int main(int argc, char **argv)
     ComponentType posRot[2] = {positionType, rotationType};
     ComponentType pos[1] = {positionType};
 
-    Entity e = world.entityManager.CreateEntity(posRot, 2);
+    Entity e = world.CreateEntity(posRot, 2);
 
-    *(Rotation *)world.entityManager.GetComponentRef(e, rotationType.id) = Rotation(10, 5, 3); // SetComponentData(e, Rotation(10, 5, 3))
+    world.SetComponentData(e, Rotation(10, 5, 3));
 
-    std::cout << world.entityManager.EntitiesToString() << "\n";
-    std::cout << world.entityManager.ArchetypesToString() << "\n";
+    world.RemoveComponent<Position>(e);
 
-    world.entityManager.RemoveComponents(e, pos, 1);
+    world.AddComponent<Scale>(e);
+    world.SetComponentData(e, Scale(1, 1, 1));
 
-    std::cout << "print\n";
-    std::cout << world.entityManager.EntitiesToString() << "\n";
-    std::cout << world.entityManager.ArchetypesToString() << "\n";
-
-    std::cout << "print(GetComponentData<Rotation>(e))\n";
-    std::cout << (*(Rotation *)world.entityManager.GetComponentRef(e, rotationType.id)).ToString() << "\n"; // print(GetComponentData<Rotation>(e))
+    std::cout << world.GetComponentData<Rotation>(e).ToString() << "\n";
+    std::cout << world.GetComponentData<Scale>(e).ToString() << "\n\n";
 
     std::cout << world.entityManager.EntitiesToString() << "\n";
     std::cout << world.entityManager.ArchetypesToString() << "\n";
