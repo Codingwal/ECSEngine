@@ -14,7 +14,7 @@ ComponentType ComponentManager::GetComponentType(ComponentID id) const
     assert(false && "Invalid ComponentID");
 }
 
-ComponentType ComponentManager::RegisterComponentInternal(const char *name, size_t size)
+ComponentType ComponentManager::GetOrRegisterComponentInternal(const char *name, size_t size)
 {
     // Skip already registered components
     if (registeredComponents.count(name))

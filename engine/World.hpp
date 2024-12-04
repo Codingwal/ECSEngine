@@ -27,7 +27,7 @@ public:
 template <typename T>
 inline void World::AddComponent(Entity entity)
 {
-    ComponentType componentType = componentManager.GetComponentType<T>();
+    ComponentType componentType = componentManager.GetOrRegisterComponent<T>();
     entityManager.AddComponents(entity, &componentType, 1);
 }
 
@@ -41,7 +41,7 @@ inline void World::RemoveComponent(Entity entity)
 template <typename T>
 inline void World::SetComponentData(Entity entity, T data)
 {
-    *(T *)entityManager.GetComponentRef(entity, componentManager.GetComponentType<T>().id) = data;
+    *(T *)entityManager.GetComponentRef(entity, componentManager.GetOrRegisterComponent<T>().id) = data;
 }
 
 template <typename T>

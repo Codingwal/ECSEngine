@@ -8,9 +8,9 @@ class ComponentManager
 {
 public:
     template <typename T>
-    ComponentType RegisterComponent()
+    ComponentType GetOrRegisterComponent()
     {
-        return RegisterComponentInternal(typeid(T).name(), sizeof(T));
+        return GetOrRegisterComponentInternal(typeid(T).name(), sizeof(T));
     }
     template <typename T>
     ComponentType GetComponentType() const
@@ -20,7 +20,7 @@ public:
     ComponentType GetComponentType(ComponentID id) const;
 
 private:
-    ComponentType RegisterComponentInternal(const char *name, size_t size);
+    ComponentType GetOrRegisterComponentInternal(const char *name, size_t size);
     ComponentType GetComponentTypeInternal(const char *name) const;
 
 private:

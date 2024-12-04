@@ -9,19 +9,24 @@ int main(int argc, char **argv)
 {
     World world = World();
 
-    ComponentType positionType = world.componentManager.RegisterComponent<Position>();
-    ComponentType rotationType = world.componentManager.RegisterComponent<Rotation>();
-    ComponentType scaleType = world.componentManager.RegisterComponent<Scale>();
+    ComponentType posType = world.componentManager.GetOrRegisterComponent<Position>();
+    ComponentType rotType = world.componentManager.GetOrRegisterComponent<Rotation>();
+    ComponentType sclType = world.componentManager.GetOrRegisterComponent<Scale>();
 
-    ComponentType posRot[2] = {positionType, rotationType};
-    ComponentType rot[1] = {rotationType};
+    ComponentType posRotScl[] = {posType, rotType, sclType};
+    ComponentType rotScl[] = {rotType, sclType};
 
-    world.SetComponentData(world.CreateEntity(posRot, 2), Rotation(10, 5, 3));
-    world.SetComponentData(world.CreateEntity(posRot, 2), Position(1, 1, 1));
-    world.SetComponentData(world.CreateEntity(&positionType, 1), Position(1, 1, 1));
-    world.SetComponentData(world.CreateEntity(&rotationType, 1), Rotation(9, 9, 9));
+    Entity e;
+    e = world.CreateEntity(posRotScl, 3);
+    world.SetComponentData(e, Rotation(90, 0, 90));
+    world.SetComponentData(e, Scale(2, 2, 2));
+    e = world.CreateEntity(posRotScl, 3);
+    world.SetComponentData(e, Rotation(180, 0, 90));
+    world.SetComponentData(e, Position(10, 0, 10));
+    e = world.CreateEntity(rotScl, 2);
+    world.SetComponentData(e, Scale(1, 1, 1));
 
-    EntityQuery rotQuery = EntityQuery(ComponentSet(rot, 1));
+    EntityQuery rotQuery = EntityQuery(ComponentSet(&rotType, 1));
     for (Entity entity : rotQuery.GetEntities(world.entityManager))
     {
         std::cout << entity.ToString() << ": " << world.GetComponentData<Rotation>(entity).ToString() << "\n";

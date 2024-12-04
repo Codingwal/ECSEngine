@@ -3,7 +3,7 @@
 
 World::World()
 {
-    componentManager.RegisterComponent<Entity>();
+    componentManager.GetOrRegisterComponent<Entity>();
 }
 
 Entity World::CreateEntity(ComponentType components[], int count)
