@@ -3,7 +3,7 @@
 #include "Core/Structs.hpp"
 #include "World.hpp"
 #include "Components.hpp"
-#include "Entities/EntityQuery.hpp"
+#include "Entities/EntityQueryGeneric.hpp"
 
 int main(int argc, char **argv)
 {
@@ -19,9 +19,7 @@ int main(int argc, char **argv)
     e = world.CreateEntity<Rotation, Scale>();
     world.SetComponentData(e, Scale(1, 1, 1));
 
-    ComponentType rotType = world.componentManager.GetOrRegisterComponent<Rotation>();
-    EntityQuery rotQuery = EntityQuery(ComponentSet(&rotType, 1));
-    for (Entity entity : rotQuery.GetEntities(world.entityManager))
+    for (Entity entity : EntityQueryGeneric<Rotation>(world).GetEntities())
     {
         std::cout << entity.ToString() << ": " << world.GetComponentData<Rotation>(entity).ToString() << "\n";
     }

@@ -37,10 +37,10 @@ EntityQuery::Iterator EntityQuery::Iterable::end()
 
 // EntityQuery
 
-EntityQuery::Iterable EntityQuery::GetEntities(EntityManager &em)
+EntityQuery::Iterable EntityQuery::GetEntities()
 {
     std::vector<Archetype *> archetypes;
-    for (auto &archetype : em.archetypes)
+    for (auto &archetype : world.entityManager.archetypes)
     {
         if (archetype.HasComponents(components))
         {

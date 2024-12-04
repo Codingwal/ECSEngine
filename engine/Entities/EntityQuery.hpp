@@ -1,6 +1,7 @@
 #include <vector>
 #include "Archetype.hpp"
 #include "EntityManager.hpp"
+#include "../World.hpp"
 
 // @brief EntityQueries are used to get all entities that have all components (and optionally more) specified
 class EntityQuery
@@ -38,9 +39,11 @@ public:
     };
 
 public:
-    EntityQuery(ComponentSet _components) : components(_components) {}
-    Iterable GetEntities(EntityManager &em);
+    EntityQuery(World &_world) : world(_world), components() {}
+    EntityQuery(ComponentSet _components, World &_world) : components(_components), world(_world) {}
+    Iterable GetEntities();
 
-private:
+protected:
     ComponentSet components;
+    World &world;
 };

@@ -42,5 +42,5 @@ struct ComponentSet
     friend bool operator==(const ComponentSet &lhs, const ComponentSet &rhs);
     std::string ToString() const;
 
-    std::bitset<MAX_COMPONENT_COUNT> set;
+    std::bitset<MAX_COMPONENT_COUNT> set = {};
 };
