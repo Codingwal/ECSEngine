@@ -9,18 +9,42 @@ int main(int argc, char **argv)
 {
     World world = World();
 
-    Entity e;
-    e = world.CreateEntity<Position, Rotation, Scale>();
-    world.SetComponentData(e, Rotation(90, 0, 90));
-    world.SetComponentData(e, Scale(2, 2, 2));
-    e = world.CreateEntity<Position, Rotation, Scale>();
-    world.SetComponentData(e, Rotation(180, 0, 90));
-    world.SetComponentData(e, Position(10, 0, 10));
-    e = world.CreateEntity<Rotation, Scale>();
-    world.SetComponentData(e, Scale(1, 1, 1));
+    Entity e = world.CreateEntity<Position, Velocity, Acceleration>();
+    world.SetComponentData(e, Acceleration(1, 1, 1));
 
-    for (Entity entity : EntityQueryGeneric<Rotation>(world).GetEntities())
+    e = world.CreateEntity<Position, Velocity, Acceleration>();
+    world.SetComponentData(e, Acceleration(2, 2, 2));
+
+    e = world.CreateEntity<Position, Velocity>();
+    world.SetComponentData(e, Velocity(5, 5, 5));
+
+    const float precision = 1000;
+    const float seconds = 10;
+    const float dt = 1 / precision;
+
+    for (int i = 0; i < precision * seconds; i++)
     {
-        std::cout << entity.ToString() << ": " << world.GetComponentData<Rotation>(entity).ToString() << "\n";
+        // Update velocity
+        for (Entity entity : EntityQueryGeneric<Velocity, Acceleration>(world).GetEntities())
+        {
+            Velocity v = world.GetComponentData<Velocity>(entity);
+            Acceleration a = world.GetComponentData<Acceleration>(entity);
+            v.value += a.value * dt;
+            world.SetComponentData(entity, v);
+        }
+
+        // Update position
+        for (Entity entity : EntityQueryGeneric<Position, Velocity>(world).GetEntities())
+        {
+            Position p = world.GetComponentData<Position>(entity);
+            Velocity v = world.GetComponentData<Velocity>(entity);
+            p.value += v.value * dt;
+            world.SetComponentData(entity, p);
+        }
+    }
+
+    for (Entity entity : EntityQueryGeneric<Position, Velocity>(world).GetEntities())
+    {
+        std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity).ToString() << "; " << world.GetComponentData<Velocity>(entity).ToString() << "\n";
     }
 }

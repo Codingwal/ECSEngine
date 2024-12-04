@@ -17,35 +17,35 @@ struct Position
         return "Position: " + value.ToString();
     }
 };
-struct Rotation
+struct Velocity
 {
     Vector3 value;
-    Rotation(Vector3 _value)
+    Velocity(Vector3 _value)
     {
         value = _value;
     }
-    Rotation(float x, float y, float z)
+    Velocity(float x, float y, float z)
     {
         value = Vector3(x, y, z);
     }
     std::string ToString() const
     {
-        return "Rotation: " + value.ToString();
+        return "Velocity: " + value.ToString();
     }
 };
-struct Scale
+struct Acceleration
 {
     Vector3 value;
-    Scale(Vector3 _value)
+    Acceleration(Vector3 _value)
     {
         value = _value;
     }
-    Scale(float x, float y, float z)
+    Acceleration(float x, float y, float z)
     {
         value = Vector3(x, y, z);
     }
     std::string ToString() const
     {
-        return "Scale: " + value.ToString();
+        return "Acceleration: " + value.ToString();
     }
 };
