@@ -24,14 +24,14 @@ ArchetypeChunk::~ArchetypeChunk()
 
 // Archetype
 
-Archetype::Archetype(ComponentType components[], int count)
+Archetype::Archetype(ComponentType components[], size_t count)
 {
     componentSet = ComponentSet(components, count);
 
     componentInfo.insert(std::pair(0, ComponentInfo(0, sizeof(Entity)))); // All entities must have the "Entity" component
 
     size_t pos = sizeof(Entity) * ENTITIES_PER_CHUNK; // Start behind the "Entity" components
-    for (int i = 0; i < count; i++)
+    for (size_t i = 0; i < count; i++)
     {
         auto &component = components[i];
         componentInfo.insert(std::pair(component.id, ComponentInfo(pos, component.size)));
@@ -44,9 +44,9 @@ Archetype::Archetype(ComponentType components[], int count)
 
 void Archetype::AddEntity(Entity entity)
 {
-    int row = entityToRow.size();
-    int chunkIndex = row / ENTITIES_PER_CHUNK;
-    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    size_t row = entityToRow.size();
+    size_t chunkIndex = row / ENTITIES_PER_CHUNK;
+    size_t indexInChunk = row % ENTITIES_PER_CHUNK;
 
     // Create a new chunk if necessary
     if (chunkIndex >= chunks.size())
@@ -89,9 +89,9 @@ void *Archetype::GetDataRef(Entity entity, ComponentID component) const
 {
     assert(entityToRow.count(entity) && "The archetype does not contain the entity");
     assert(componentInfo.count(component) && "The archetype does not contain the component");
-    int row = entityToRow.at(entity);
-    int chunkIndex = row / ENTITIES_PER_CHUNK;
-    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    size_t row = entityToRow.at(entity);
+    size_t chunkIndex = row / ENTITIES_PER_CHUNK;
+    size_t indexInChunk = row % ENTITIES_PER_CHUNK;
     auto &info = componentInfo.at(component);
     size_t posInChunk = info.startIndex + indexInChunk * info.size;
     return (char *)chunks.at(chunkIndex).data + posInChunk; // chunkPtr + posInChunk
@@ -122,10 +122,10 @@ std::vector<ComponentType> Archetype::GetComponentTypes() const noexcept
     return components;
 }
 
-Entity Archetype::RowToEntity(int row) const
+Entity Archetype::RowToEntity(size_t row) const
 {
-    int chunkIndex = row / ENTITIES_PER_CHUNK;
-    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    size_t chunkIndex = row / ENTITIES_PER_CHUNK;
+    size_t indexInChunk = row % ENTITIES_PER_CHUNK;
     size_t posInChunk = indexInChunk * sizeof(Entity);
     void *ptr = (char *)chunks[chunkIndex].data + posInChunk;
     return *(Entity *)ptr;

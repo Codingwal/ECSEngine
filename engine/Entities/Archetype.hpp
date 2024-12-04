@@ -25,7 +25,7 @@ struct ComponentInfo
 class Archetype
 {
 public:
-    Archetype(ComponentType components[], int size);
+    Archetype(ComponentType components[], size_t size);
     void AddEntity(Entity entity);
     void CopyEntityData(Archetype &destination, Entity destEntity, Entity srcEntity);
     void RemoveEntity(Entity entity);
@@ -37,17 +37,17 @@ public:
     ComponentSet GetComponentSet() const noexcept { return componentSet; }
     std::vector<ComponentType> GetComponentTypes() const noexcept;
 
-    int EntityCount() const { return entityToRow.size(); }
+    size_t EntityCount() const { return entityToRow.size(); }
     std::string ToString() const;
 
 private:
-    Entity RowToEntity(int row) const;
+    Entity RowToEntity(size_t row) const;
 
 private:
     ComponentSet componentSet;
     std::map<ComponentID, ComponentInfo> componentInfo;
     std::vector<ArchetypeChunk> chunks;
-    std::map<Entity, int> entityToRow;
+    std::map<Entity, size_t> entityToRow;
     size_t chunkSize;
 
     friend class EntityQuery;

@@ -2,13 +2,13 @@
 #include <iostream>
 #include <cassert>
 
-Entity EntityManager::CreateEntity(ComponentType components[], int count)
+Entity EntityManager::CreateEntity(ComponentType components[], size_t count)
 {
     assert(entityCount < MAX_ENTITY_COUNT && "Invalid entity");
     Entity entity = Entity(entityCount++);
-    int32_t archetypeIndex = GetOrCreateArchetype(components, count);
+    size_t archetypeIndex = GetOrCreateArchetype(components, count);
     archetypes[archetypeIndex].AddEntity(entity);
-    entityToArchetype.insert(std::pair<Entity, uint32_t>(entity, archetypeIndex));
+    entityToArchetype.insert(std::pair<Entity, size_t>(entity, archetypeIndex));
     return entity;
 }
 void EntityManager::DestroyEntity(Entity entity)
@@ -29,7 +29,7 @@ Archetype &EntityManager::GetArchetype(Entity entity)
     assert(entityToArchetype.count(entity) && "Invalid entity");
     return archetypes.at(entityToArchetype.at(entity));
 }
-uint32_t EntityManager::GetArchetypeIndex(Entity entity) const
+size_t EntityManager::GetArchetypeIndex(Entity entity) const
 {
     assert(entityToArchetype.count(entity) && "Invalid entity");
     return entityToArchetype.at(entity);
@@ -76,7 +76,7 @@ void EntityManager::RemoveComponents(Entity entity, ComponentType components[], 
         }
     }
 
-    uint32_t newArchetypeIndex = GetOrCreateArchetype(componentTypes.data(), componentTypes.size());
+    size_t newArchetypeIndex = GetOrCreateArchetype(componentTypes.data(), componentTypes.size());
     ChangeArchetype(entity, newArchetypeIndex);
 }
 std::string EntityManager::ArchetypesToString() const
@@ -89,7 +89,7 @@ std::string EntityManager::ArchetypesToString() const
     return string;
 }
 
-void EntityManager::ChangeArchetype(Entity entity, uint32_t newArchetypeIndex)
+void EntityManager::ChangeArchetype(Entity entity, size_t newArchetypeIndex)
 {
     Archetype &oldArchetype = GetArchetype(entity);
     Archetype &newArchetype = archetypes[newArchetypeIndex];
@@ -99,10 +99,10 @@ void EntityManager::ChangeArchetype(Entity entity, uint32_t newArchetypeIndex)
     entityToArchetype[entity] = newArchetypeIndex;
 }
 
-uint32_t EntityManager::GetOrCreateArchetype(ComponentType components[], int count)
+size_t EntityManager::GetOrCreateArchetype(ComponentType components[], size_t count)
 {
     ComponentSet set = ComponentSet(components, count);
-    for (int i = 0; i < archetypes.size(); i++)
+    for (size_t i = 0; i < archetypes.size(); i++)
     {
         if (archetypes[i].Matches(set))
         {

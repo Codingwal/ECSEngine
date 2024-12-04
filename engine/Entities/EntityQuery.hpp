@@ -10,7 +10,7 @@ public:
     class Iterator
     {
     public:
-        Iterator(uint32_t archetypeCount)
+        Iterator(size_t archetypeCount)
             : archetypeIndex(archetypeCount)
         {
         }
@@ -21,8 +21,8 @@ public:
 
     private:
         std::vector<Archetype *> archetypes;
-        uint32_t archetypeIndex;
-        uint32_t indexInArchetype;
+        size_t archetypeIndex;
+        size_t indexInArchetype;
     };
 
     // @brief The iterable returned by EntityQuery::GetEntities

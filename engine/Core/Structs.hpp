@@ -10,15 +10,15 @@
 struct Entity
 {
     Entity() = default;
-    Entity(int _id) : id(_id) {}
+    Entity(uint32_t _id) : id(_id) {}
     friend const bool operator<(const Entity &lhs, const Entity &rhs);
     std::string ToString() const;
 
-    int32_t id;
+    uint32_t id;
 };
 
 // @brief The unique ID of a component
-using ComponentID = int8_t;
+using ComponentID = uint8_t;
 
 // @brief Contains information about a component
 struct ComponentType
@@ -37,7 +37,7 @@ struct ComponentType
 struct ComponentSet
 {
     ComponentSet() = default;
-    ComponentSet(ComponentType *components, int size);
+    ComponentSet(ComponentType *components, size_t size);
     bool HasComponents(ComponentSet &other) const;
     friend bool operator==(const ComponentSet &lhs, const ComponentSet &rhs);
     std::string ToString() const;

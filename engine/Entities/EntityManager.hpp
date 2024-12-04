@@ -9,7 +9,7 @@
 class EntityManager
 {
 public:
-    Entity CreateEntity(ComponentType components[], int count);
+    Entity CreateEntity(ComponentType components[], size_t count);
     void DestroyEntity(Entity entity);
     void AddComponents(Entity entity, ComponentType components[], size_t count);
     void RemoveComponents(Entity entity, ComponentType components[], size_t count);
@@ -21,14 +21,14 @@ public:
     std::string ArchetypesToString() const;
 
 private:
-    void ChangeArchetype(Entity entity, uint32_t newArchetypeIndex);
-    uint32_t GetOrCreateArchetype(ComponentType components[], int count);
-    uint32_t GetArchetypeIndex(Entity entity) const;
+    void ChangeArchetype(Entity entity, size_t newArchetypeIndex);
+    size_t GetOrCreateArchetype(ComponentType components[], size_t count);
+    size_t GetArchetypeIndex(Entity entity) const;
 
 private:
     int entityCount = 0;
     std::vector<Archetype> archetypes;
-    std::map<Entity, uint32_t> entityToArchetype;
+    std::map<Entity, size_t> entityToArchetype;
 
     friend class EntityQuery;
 };

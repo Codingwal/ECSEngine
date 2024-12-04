@@ -32,10 +32,10 @@ std::string ComponentType::ToString()
 
 // ComponentSet
 
-ComponentSet::ComponentSet(ComponentType *components, int size)
+ComponentSet::ComponentSet(ComponentType *components, size_t size)
 {
     set.set(0, true); // All entities have the "Entity" component
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         set.set(components[i].id, true);
     }
