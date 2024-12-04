@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "Constants.hpp"
 #include <bitset>
+#include <iostream>
 
 struct Entity
 {
@@ -61,7 +62,7 @@ struct ComponentSet
     }
     bool HasComponents(ComponentSet &other) const
     {
-        return (set & other.set) == set;
+        return (set & other.set) == other.set;
     }
     friend inline bool operator==(const ComponentSet &lhs, const ComponentSet &rhs)
     {

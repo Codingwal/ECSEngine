@@ -10,14 +10,16 @@ class EntityManager
 public:
     Entity CreateEntity(ComponentType components[], int count);
     void DestroyEntity(Entity entity);
-    void *GetComponentRef(Entity entity, ComponentID component) const;
-    Archetype &GetArchetype(Entity entity);
-
     void AddComponents(Entity entity, ComponentType components[], size_t count);
     void RemoveComponents(Entity entity, ComponentType components[], size_t count);
 
+    void *GetComponentRef(Entity entity, ComponentID component) const;
+    Archetype &GetArchetype(Entity entity);
+
     std::string EntitiesToString() const;
     std::string ArchetypesToString() const;
+
+    std::vector<Archetype> archetypes;
 
 private:
     void ChangeArchetype(Entity entity, uint32_t newArchetypeIndex);
@@ -26,6 +28,5 @@ private:
 
 private:
     int entityCount = 0;
-    std::vector<Archetype> archetypes;
     std::map<Entity, uint32_t> entityToArchetype;
 };

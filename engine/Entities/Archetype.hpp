@@ -47,6 +47,8 @@ public:
     ComponentSet GetComponentSet() const noexcept { return componentSet; }
     std::vector<ComponentType> GetComponentTypes() const noexcept;
 
+    Entity RowToEntity(int row) const;
+
     int EntityCount() const { return entityToRow.size(); }
     std::string ToString() const;
 

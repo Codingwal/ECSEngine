@@ -94,6 +94,8 @@ bool Archetype::HasComponent(ComponentID component) const noexcept
 
 bool Archetype::HasComponents(ComponentSet components) const noexcept
 {
+    std::cout << componentSet.ToString() << " has " << components.ToString() << " -> " << componentSet.HasComponents(components) << "\n";
+    std::cout << (componentSet.set & components.set) << "\n";
     return componentSet.HasComponents(components);
 }
 
@@ -110,6 +112,15 @@ std::vector<ComponentType> Archetype::GetComponentTypes() const noexcept
         components.push_back(ComponentType(pair.first, pair.second.size));
     }
     return components;
+}
+
+Entity Archetype::RowToEntity(int row) const
+{
+    int chunkIndex = row / ENTITIES_PER_CHUNK;
+    int indexInChunk = row % ENTITIES_PER_CHUNK;
+    size_t posInChunk = indexInChunk * sizeof(Entity);
+    void *ptr = (char *)chunks[chunkIndex].data + posInChunk;
+    return *(Entity *)ptr;
 }
 
 std::string Archetype::ToString() const
