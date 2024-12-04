@@ -8,15 +8,9 @@ class ComponentManager
 {
 public:
     template <typename T>
-    ComponentType GetOrRegisterComponent()
-    {
-        return GetOrRegisterComponentInternal(typeid(T).name(), sizeof(T));
-    }
+    ComponentType GetOrRegisterComponent();
     template <typename T>
-    ComponentType GetComponentType() const
-    {
-        return GetComponentTypeInternal(typeid(T).name());
-    }
+    ComponentType GetComponentType() const;
     ComponentType GetComponentType(ComponentID id) const;
 
 private:
@@ -27,3 +21,14 @@ private:
     int highestComponentId = 0;
     std::map<const char *, ComponentType> registeredComponents;
 };
+
+template <typename T>
+ComponentType ComponentManager::GetOrRegisterComponent()
+{
+    return GetOrRegisterComponentInternal(typeid(T).name(), sizeof(T));
+}
+template <typename T>
+ComponentType ComponentManager::GetComponentType() const
+{
+    return GetComponentTypeInternal(typeid(T).name());
+}

@@ -1,34 +1,51 @@
 #include "EntityQuery.hpp"
 
-// EntityQuery::Iterator()
-//     : archetypeIndex(-1), indexInArchetype(-1)
-// {
-// }
-// EntityQuery::Iterator(std::vector<Archetype &> _archetypes)
-//     : archetypes(_archetypes), archetypeIndex(0), indexInArchetype(0)
-// {
-// }
-// EntityQuery::Iterator EntityQuery::Iterable::begin()
-// {
-//     return Iterator(archetypes);
-// }
+// Iterator
 
-// EntityQuery::Iterator EntityQuery::Iterable::end()
-// {
-//     return Iterator();
-// }
+EntityQuery::Iterator &EntityQuery::Iterator::operator++()
+{
+    ++indexInArchetype;
+    if (indexInArchetype >= archetypes[archetypeIndex]->EntityCount())
+    {
+        indexInArchetype = 0;
+        ++archetypeIndex;
+    }
+    return *this;
+}
 
-// EntityQuery::Iterator EntityQuery::Iterator::operator++()
-// {
-//     indexInArchetype++;
-//     if (indexInArchetype >= archetypes[archetypeIndex].EntityCount())
-//     {
-//         archetypeIndex++;
-//         if (archetypeIndex >= archetypes.size())
-//         {
-//             archetypeIndex = -1;
-//             indexInArchetype = -1;
-//         }
-//     }
-//     return *this;
-// }
+Entity EntityQuery::Iterator::operator*()
+{
+    return archetypes[archetypeIndex]->RowToEntity(indexInArchetype);
+}
+
+bool operator!=(const EntityQuery::Iterator &lhs, const EntityQuery::Iterator &rhs)
+{
+    return lhs.archetypeIndex != rhs.archetypeIndex;
+}
+
+// Iterable
+
+EntityQuery::Iterator EntityQuery::Iterable::begin()
+{
+    return Iterator(archetypes);
+}
+
+EntityQuery::Iterator EntityQuery::Iterable::end()
+{
+    return Iterator(archetypes.size());
+}
+
+// EntityQuery
+
+EntityQuery::Iterable EntityQuery::GetEntities(EntityManager &em)
+{
+    std::vector<Archetype *> archetypes;
+    for (auto &archetype : em.archetypes)
+    {
+        if (archetype.HasComponents(components))
+        {
+            archetypes.push_back(&archetype);
+        }
+    }
+    return Iterable(archetypes);
+}

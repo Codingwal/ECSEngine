@@ -3,6 +3,7 @@
 #include "Entities/EntityManager.hpp"
 #include "Components/ComponentManager.hpp"
 
+// @brief An ECS world. Each world has its own entities, components, systems and their respective managers
 class World
 {
 public:

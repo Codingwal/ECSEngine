@@ -4,34 +4,24 @@
 #include <vector>
 #include <map>
 
+// @brief A chunk owned by an archetype that has space for ENTITIES_PER_CHUNK entities
 struct ArchetypeChunk
 {
     void *data;
-    ArchetypeChunk(size_t size)
-    {
-        data = calloc(size, sizeof(char));
-    }
-    ArchetypeChunk(ArchetypeChunk &&other)
-    {
-        data = other.data;
-        other.data = nullptr;
-    }
-    ~ArchetypeChunk()
-    {
-        if (data)
-            free(data);
-    }
+    ArchetypeChunk(size_t size);
+    ArchetypeChunk(ArchetypeChunk &&other);
+    ~ArchetypeChunk();
 };
+
+// @brief Internal information about a component. Only used by archetypes
 struct ComponentInfo
 {
     int startIndex;
     size_t size;
-    ComponentInfo(int _startIndex, size_t _size)
-    {
-        startIndex = _startIndex;
-        size = _size;
-    }
+    ComponentInfo(int _startIndex, size_t _size) : startIndex(_startIndex), size(_size) {}
 };
+
+// @brief Contains all entities and their component data of a specific ComponentSet (component combination)
 class Archetype
 {
 public:
@@ -47,10 +37,11 @@ public:
     ComponentSet GetComponentSet() const noexcept { return componentSet; }
     std::vector<ComponentType> GetComponentTypes() const noexcept;
 
-    Entity RowToEntity(int row) const;
-
     int EntityCount() const { return entityToRow.size(); }
     std::string ToString() const;
+
+private:
+    Entity RowToEntity(int row) const;
 
 private:
     ComponentSet componentSet;
@@ -58,4 +49,6 @@ private:
     std::vector<ArchetypeChunk> chunks;
     std::map<Entity, int> entityToRow;
     size_t chunkSize;
+
+    friend class EntityQuery;
 };

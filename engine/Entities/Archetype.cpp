@@ -3,17 +3,27 @@
 #include <iostream>
 #include <cassert>
 
-struct EntityInfo
-{
-    int chunkIndex;
-    int indexInChunk;
-};
-EntityInfo GetEntityInfo(const std::map<Entity, int> &entityToRow, Entity entity)
-{
-    EntityInfo info;
+// ArchetypeChunk
 
-    return info;
+ArchetypeChunk::ArchetypeChunk(size_t size)
+{
+    data = calloc(size, sizeof(char));
 }
+
+ArchetypeChunk::ArchetypeChunk(ArchetypeChunk &&other)
+{
+    data = other.data;
+    other.data = nullptr;
+}
+
+ArchetypeChunk::~ArchetypeChunk()
+{
+    if (data)
+        free(data);
+}
+
+// Archetype
+
 Archetype::Archetype(ComponentType components[], int count)
 {
     componentSet = ComponentSet(components, count);
@@ -94,8 +104,6 @@ bool Archetype::HasComponent(ComponentID component) const noexcept
 
 bool Archetype::HasComponents(ComponentSet components) const noexcept
 {
-    std::cout << componentSet.ToString() << " has " << components.ToString() << " -> " << componentSet.HasComponents(components) << "\n";
-    std::cout << (componentSet.set & components.set) << "\n";
     return componentSet.HasComponents(components);
 }
 

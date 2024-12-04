@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 
+// @brief Owns and manages all entities and archetypes
 class EntityManager
 {
 public:
@@ -19,8 +20,6 @@ public:
     std::string EntitiesToString() const;
     std::string ArchetypesToString() const;
 
-    std::vector<Archetype> archetypes;
-
 private:
     void ChangeArchetype(Entity entity, uint32_t newArchetypeIndex);
     uint32_t GetOrCreateArchetype(ComponentType components[], int count);
@@ -28,5 +27,8 @@ private:
 
 private:
     int entityCount = 0;
+    std::vector<Archetype> archetypes;
     std::map<Entity, uint32_t> entityToArchetype;
+
+    friend class EntityQuery;
 };
