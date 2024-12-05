@@ -1,11 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../Archetype.hpp"
-#include "../EntityManager.hpp"
-#include "../../World.hpp"
 #include "EntityQuery.hpp"
-#include "Implementation.hpp"
+#include "Implementation.tpp"
 
 namespace ECSEngine
 {

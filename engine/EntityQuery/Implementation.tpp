@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../World.hpp"
+#include "../Interface/World.hpp"
 
 namespace ECSEngine
 {

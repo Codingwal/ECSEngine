@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include "../Core/Structs.hpp"
+#include "Base/Structs.hpp"
 #include <typeinfo>
 
 namespace ECSEngine

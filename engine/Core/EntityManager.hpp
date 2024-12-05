@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Archetype.hpp"
-#include "../Core/Structs.hpp"
+#include "Base/Structs.hpp"
 #include <vector>
 #include <map>
 

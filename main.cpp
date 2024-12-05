@@ -1,9 +1,7 @@
-#include <stdio.h>
 #include <iostream>
-#include "Core/Structs.hpp"
-#include "World.hpp"
+#include "engine/Interface/World.cpp"
 #include "Components.hpp"
-#include "Entities/EntityQuery/EntityQueryGeneric.hpp"
+#include "engine/EntityQuery/EntityQueryGeneric.hpp"
 
 int main(int argc, char **argv)
 {

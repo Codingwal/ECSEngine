@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core/Structs.hpp"
+#include "Base/Structs.hpp"
 #include <vector>
 #include <map>
 

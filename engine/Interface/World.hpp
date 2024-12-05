@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Entities/EntityManager.hpp"
-#include "Components/ComponentManager.hpp"
+#include "../Core/EntityManager.hpp"
+#include "../Core/ComponentManager.hpp"
 
 namespace ECSEngine
 {
