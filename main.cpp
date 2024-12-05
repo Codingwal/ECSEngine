@@ -3,10 +3,12 @@
 #include "Core/Structs.hpp"
 #include "World.hpp"
 #include "Components.hpp"
-#include "Entities/EntityQueryGeneric.hpp"
+#include "Entities/EntityQuery/EntityQueryGeneric.hpp"
 
 int main(int argc, char **argv)
 {
+    using namespace ECSEngine;
+
     World world = World();
 
     Entity e = world.CreateEntity<Position, Velocity, Acceleration>();
@@ -18,7 +20,7 @@ int main(int argc, char **argv)
     e = world.CreateEntity<Position, Velocity>();
     world.SetComponentData(e, Velocity(5, 5, 5));
 
-    const float precision = 1000;
+    const float precision = 100;
     const float seconds = 10;
     const float dt = 1 / precision;
 
@@ -27,19 +29,13 @@ int main(int argc, char **argv)
         // Update velocity
         for (Entity entity : EntityQueryGeneric<Velocity, Acceleration>(world).GetEntities())
         {
-            Velocity v = world.GetComponentData<Velocity>(entity);
-            Acceleration a = world.GetComponentData<Acceleration>(entity);
-            v.value += a.value * dt;
-            world.SetComponentData(entity, v);
+            world.GetComponentDataRef<Velocity>(entity).value += world.GetComponentData<Acceleration>(entity).value * dt;
         }
 
         // Update position
         for (Entity entity : EntityQueryGeneric<Position, Velocity>(world).GetEntities())
         {
-            Position p = world.GetComponentData<Position>(entity);
-            Velocity v = world.GetComponentData<Velocity>(entity);
-            p.value += v.value * dt;
-            world.SetComponentData(entity, p);
+            world.GetComponentDataRef<Position>(entity).value += world.GetComponentData<Velocity>(entity).value * dt;
         }
     }
 

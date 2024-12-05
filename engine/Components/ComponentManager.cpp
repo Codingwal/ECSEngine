@@ -2,30 +2,33 @@
 #include <cassert>
 #include <iostream>
 
-ComponentType ComponentManager::GetComponentType(ComponentID id) const
+namespace ECSEngine
 {
-    for (const std::pair<const char *const, ComponentType> &pair : registeredComponents)
+    ComponentType ComponentManager::GetComponentType(ComponentID id) const
     {
-        if (pair.second.id == id)
+        for (const std::pair<const char *const, ComponentType> &pair : registeredComponents)
         {
-            return pair.second;
+            if (pair.second.id == id)
+            {
+                return pair.second;
+            }
         }
+        assert(false && "Invalid ComponentID");
     }
-    assert(false && "Invalid ComponentID");
-}
 
-ComponentType ComponentManager::GetOrRegisterComponentInternal(const char *name, size_t size)
-{
-    // Skip already registered components
-    if (registeredComponents.count(name))
-        return GetComponentTypeInternal(name);
+    ComponentType ComponentManager::GetOrRegisterComponentInternal(const char *name, size_t size)
+    {
+        // Skip already registered components
+        if (registeredComponents.count(name))
+            return GetComponentTypeInternal(name);
 
-    ComponentType type = ComponentType(highestComponentId++, size);
-    registeredComponents.insert(std::pair(name, type));
-    return type;
-}
-ComponentType ComponentManager::GetComponentTypeInternal(const char *name) const
-{
-    assert(registeredComponents.count(name) && "Component has not been registered");
-    return registeredComponents.at(name);
+        ComponentType type = ComponentType(highestComponentId++, size);
+        registeredComponents.insert(std::pair(name, type));
+        return type;
+    }
+    ComponentType ComponentManager::GetComponentTypeInternal(const char *name) const
+    {
+        assert(registeredComponents.count(name) && "Component has not been registered");
+        return registeredComponents.at(name);
+    }
 }

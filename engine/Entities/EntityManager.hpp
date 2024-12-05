@@ -5,30 +5,33 @@
 #include <vector>
 #include <map>
 
-// @brief Owns and manages all entities and archetypes
-class EntityManager
+namespace ECSEngine
 {
-public:
-    Entity CreateEntity(ComponentType components[], size_t count);
-    void DestroyEntity(Entity entity);
-    void AddComponents(Entity entity, ComponentType components[], size_t count);
-    void RemoveComponents(Entity entity, ComponentType components[], size_t count);
+    // @brief Owns and manages all entities and archetypes
+    class EntityManager
+    {
+    public:
+        Entity CreateEntity(ComponentType components[], size_t count);
+        void DestroyEntity(Entity entity);
+        void AddComponents(Entity entity, ComponentType components[], size_t count);
+        void RemoveComponents(Entity entity, ComponentType components[], size_t count);
 
-    void *GetComponentRef(Entity entity, ComponentID component) const;
-    Archetype &GetArchetype(Entity entity);
+        void *GetComponentRef(Entity entity, ComponentID component) const;
+        Archetype &GetArchetype(Entity entity);
 
-    std::string EntitiesToString() const;
-    std::string ArchetypesToString() const;
+        std::string EntitiesToString() const;
+        std::string ArchetypesToString() const;
 
-private:
-    void ChangeArchetype(Entity entity, size_t newArchetypeIndex);
-    size_t GetOrCreateArchetype(ComponentType components[], size_t count);
-    size_t GetArchetypeIndex(Entity entity) const;
+    private:
+        void ChangeArchetype(Entity entity, size_t newArchetypeIndex);
+        size_t GetOrCreateArchetype(ComponentType components[], size_t count);
+        size_t GetArchetypeIndex(Entity entity) const;
 
-private:
-    int entityCount = 0;
-    std::vector<Archetype> archetypes;
-    std::map<Entity, size_t> entityToArchetype;
+    private:
+        int entityCount = 0;
+        std::vector<Archetype> archetypes;
+        std::map<Entity, size_t> entityToArchetype;
 
-    friend class EntityQuery;
-};
+        friend class EntityQuery;
+    };
+}

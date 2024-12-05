@@ -1,17 +1,20 @@
 #include "World.hpp"
 #include <iostream>
 
-World::World()
+namespace ECSEngine
 {
-    componentManager.GetOrRegisterComponent<Entity>();
-}
+    World::World()
+    {
+        componentManager.GetOrRegisterComponent<Entity>();
+    }
 
-Entity World::CreateEntity(ComponentType components[], int count)
-{
-    return entityManager.CreateEntity(components, count);
-}
+    Entity World::CreateEntity(ComponentType components[], int count)
+    {
+        return entityManager.CreateEntity(components, count);
+    }
 
-void World::DestroyEntity(Entity entity)
-{
-    return entityManager.DestroyEntity(entity);
+    void World::DestroyEntity(Entity entity)
+    {
+        return entityManager.DestroyEntity(entity);
+    }
 }
