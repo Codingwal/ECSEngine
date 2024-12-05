@@ -6,11 +6,11 @@ namespace ECSEngine
 {
     Entity EntityManager::CreateEntity(ComponentType components[], size_t count)
     {
-        assert(entityCount < MAX_ENTITY_COUNT && "Invalid entity");
+        assert(entityCount < MAX_ENTITY_COUNT && "Max entity count has been reached");
         Entity entity = Entity(entityCount++);
         size_t archetypeIndex = GetOrCreateArchetype(components, count);
         archetypes[archetypeIndex].AddEntity(entity);
-        entityToArchetype.insert(std::pair<Entity, size_t>(entity, archetypeIndex));
+        entityToArchetype.emplace(entity, archetypeIndex);
         return entity;
     }
     void EntityManager::DestroyEntity(Entity entity)
@@ -40,7 +40,7 @@ namespace ECSEngine
     std::string EntityManager::EntitiesToString() const
     {
         std::string string = "Entities: (<ID>: <ComponentSet>)\n";
-        for (const std::pair<const Entity, uint32_t> &pair : entityToArchetype)
+        for (const std::pair<Entity, uint32_t> &pair : entityToArchetype)
         {
             string.append(pair.first.ToString());
             string.append(": ");
@@ -112,7 +112,7 @@ namespace ECSEngine
             }
         }
 
-        archetypes.push_back(Archetype(components, count));
+        archetypes.emplace_back(components, count);
         return archetypes.size() - 1;
     }
 }

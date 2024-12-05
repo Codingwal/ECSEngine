@@ -30,18 +30,18 @@ namespace ECSEngine
     {
         componentSet = ComponentSet(components, count);
 
-        componentInfo.insert(std::pair(0, ComponentInfo(0, sizeof(Entity)))); // All entities must have the "Entity" component
+        componentInfo.emplace(std::pair(0, ComponentInfo(0, sizeof(Entity)))); // All entities must have the "Entity" component
 
         size_t pos = sizeof(Entity) * ENTITIES_PER_CHUNK; // Start behind the "Entity" components
         for (size_t i = 0; i < count; i++)
         {
             auto &component = components[i];
-            componentInfo.insert(std::pair(component.id, ComponentInfo(pos, component.size)));
+            componentInfo.emplace(component.id, ComponentInfo(pos, component.size));
             pos += component.size * ENTITIES_PER_CHUNK;
         }
         chunkSize = pos;
 
-        chunks.push_back(ArchetypeChunk(chunkSize));
+        chunks.emplace_back(chunkSize);
     }
 
     void Archetype::AddEntity(Entity entity)
@@ -53,11 +53,11 @@ namespace ECSEngine
         // Create a new chunk if necessary
         if (chunkIndex >= chunks.size())
         {
-            chunks.push_back(ArchetypeChunk(chunkSize));
+            chunks.emplace_back(chunkSize);
         }
         ArchetypeChunk &chunk = chunks[chunkIndex];
 
-        entityToRow.insert(std::pair(entity, row));
+        entityToRow.emplace(entity, row);
         *(Entity *)GetDataRef(entity, 0) = entity;
     }
 
@@ -119,7 +119,7 @@ namespace ECSEngine
         std::vector<ComponentType> components;
         for (auto &pair : componentInfo)
         {
-            components.push_back(ComponentType(pair.first, pair.second.size));
+            components.emplace_back(pair.first, pair.second.size);
         }
         return components;
     }

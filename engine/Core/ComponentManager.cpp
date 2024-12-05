@@ -6,7 +6,7 @@ namespace ECSEngine
 {
     ComponentType ComponentManager::GetComponentType(ComponentID id) const
     {
-        for (const std::pair<const char *const, ComponentType> &pair : registeredComponents)
+        for (const std::pair<const char *, ComponentType> &pair : registeredComponents)
         {
             if (pair.second.id == id)
             {
@@ -23,7 +23,7 @@ namespace ECSEngine
             return GetComponentTypeInternal(name);
 
         ComponentType type = ComponentType(highestComponentId++, size);
-        registeredComponents.insert(std::pair(name, type));
+        registeredComponents.emplace(name, type);
         return type;
     }
     ComponentType ComponentManager::GetComponentTypeInternal(const char *name) const
