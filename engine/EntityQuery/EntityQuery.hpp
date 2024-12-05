@@ -16,18 +16,18 @@ namespace ECSEngine
         {
         public:
             Iterator(size_t archetypeCount)
-                : archetypeIndex(archetypeCount)
+                : archetypeIndex(archetypeCount), archetypes(nullptr)
             {
             }
-            Iterator(const std::vector<Archetype *> _archetypes) : archetypes(_archetypes), archetypeIndex(0), indexInArchetype(0) {}
+            Iterator(const std::vector<Archetype *> *_archetypes) : archetypes(_archetypes), archetypeIndex(0), indexInArchetype(0) {}
             Iterator &operator++();
             Entity operator*();
             friend bool operator!=(const Iterator &lhs, const Iterator &rhs);
 
         private:
-            std::vector<Archetype *> archetypes;
             size_t archetypeIndex;
             size_t indexInArchetype;
+            const std::vector<Archetype *> *archetypes;
         };
 
         // @brief The iterable returned by EntityQuery::GetEntities
@@ -39,16 +39,23 @@ namespace ECSEngine
             Iterator end();
 
         private:
-            std::vector<Archetype *> archetypes;
+            const std::vector<Archetype *> &archetypes;
         };
 
     public:
         EntityQuery(World &_world) : world(_world), components() {}
-        EntityQuery(ComponentSet _components, World &_world) : components(_components), world(_world) {}
+        EntityQuery(ComponentSet _components, World &_world);
         Iterable GetEntities();
+
+    public:
+        void Update();
 
     protected:
         ComponentSet components;
+
+    private:
         World &world;
+        size_t archetypeCount = 0;
+        std::vector<Archetype *> archetypes;
     };
 }

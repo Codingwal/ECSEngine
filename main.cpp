@@ -18,20 +18,22 @@ int main(int argc, char **argv)
     e = world.CreateEntity<Position, Velocity>();
     world.SetComponentData(e, Velocity(5, 5, 5));
 
-    const float precision = 100;
+    const float precision = 1000;
     const float seconds = 10;
     const float dt = 1 / precision;
 
+    EntityQueryGeneric<Velocity, Acceleration> velAccQuery(world);
+    EntityQueryGeneric<Position, Velocity> posVelQuery(world);
     for (int i = 0; i < precision * seconds; i++)
     {
         // Update velocity
-        for (Entity entity : EntityQueryGeneric<Velocity, Acceleration>(world).GetEntities())
+        for (Entity entity : velAccQuery.GetEntities())
         {
             world.GetComponentDataRef<Velocity>(entity).value += world.GetComponentData<Acceleration>(entity).value * dt;
         }
 
         // Update position
-        for (Entity entity : EntityQueryGeneric<Position, Velocity>(world).GetEntities())
+        for (Entity entity : posVelQuery.GetEntities())
         {
             world.GetComponentDataRef<Position>(entity).value += world.GetComponentData<Velocity>(entity).value * dt;
         }

@@ -7,7 +7,7 @@ namespace ECSEngine
     EntityQuery::Iterator &EntityQuery::Iterator::operator++()
     {
         ++indexInArchetype;
-        if (indexInArchetype >= archetypes[archetypeIndex]->EntityCount())
+        if (indexInArchetype >= archetypes->at(archetypeIndex)->EntityCount())
         {
             indexInArchetype = 0;
             ++archetypeIndex;
@@ -17,7 +17,7 @@ namespace ECSEngine
 
     Entity EntityQuery::Iterator::operator*()
     {
-        return archetypes[archetypeIndex]->RowToEntity(indexInArchetype);
+        return archetypes->at(archetypeIndex)->RowToEntity(indexInArchetype);
     }
 
     bool operator!=(const EntityQuery::Iterator &lhs, const EntityQuery::Iterator &rhs)
@@ -29,7 +29,7 @@ namespace ECSEngine
 
     EntityQuery::Iterator EntityQuery::Iterable::begin()
     {
-        return Iterator(archetypes);
+        return Iterator(&archetypes);
     }
 
     EntityQuery::Iterator EntityQuery::Iterable::end()
@@ -39,16 +39,27 @@ namespace ECSEngine
 
     // EntityQuery
 
-    EntityQuery::Iterable EntityQuery::GetEntities()
+    EntityQuery::EntityQuery(ComponentSet _components, World &_world)
+        : components(_components), world(_world)
     {
-        std::vector<Archetype *> archetypes;
-        for (auto &archetype : world.entityManager.archetypes)
+        Update();
+    }
+
+    void EntityQuery::Update()
+    {
+        for (size_t i = archetypeCount; i < world.entityManager.archetypes.size(); i++)
         {
+            Archetype &archetype = world.entityManager.archetypes.at(i);
             if (archetype.HasComponents(components))
             {
                 archetypes.push_back(&archetype);
             }
         }
+        archetypeCount = world.entityManager.archetypes.size();
+    }
+
+    EntityQuery::Iterable EntityQuery::GetEntities()
+    {
         return Iterable(archetypes);
     }
 }

@@ -15,6 +15,7 @@ namespace ECSEngine
             : EntityQuery(_world)
         {
             Implementation::EntityQueryCtorHelper<Ts...>(components, _world);
+            Update();
         }
     };
 }
