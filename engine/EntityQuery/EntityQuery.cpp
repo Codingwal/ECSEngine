@@ -1,4 +1,5 @@
 #include "EntityQuery.hpp"
+#include "../Interface/World.hpp"
 
 namespace ECSEngine
 {
@@ -29,12 +30,12 @@ namespace ECSEngine
 
     EntityQuery::Iterator EntityQuery::Iterable::begin()
     {
-        return Iterator(archetypes);
+        return Iterator(&archetypes);
     }
 
     EntityQuery::Iterator EntityQuery::Iterable::end()
     {
-        return Iterator(archetypes->size());
+        return Iterator(archetypes.size());
     }
 
     // EntityQuery
@@ -60,6 +61,6 @@ namespace ECSEngine
 
     EntityQuery::Iterable EntityQuery::GetEntities()
     {
-        return Iterable(&archetypes);
+        return Iterable(archetypes);
     }
 }

@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     world.systemManager.RegisterSystem<PositionSystem>();
     world.systemManager.RegisterSystem<VelocitySystem>();
 
-    const float precision = 100;
+    const float precision = 10;
     const float seconds = 10;
     const float dt = 1 / precision;
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
         world.systemManager.Update(world, dt);
     }
 
-    for (Entity entity : EntityQueryGeneric<Position, Velocity>(world).GetEntities())
+    for (Entity entity : world.GetEntityQuery<Position, Velocity>().GetEntities())
     {
         std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity).ToString() << "; " << world.GetComponentData<Velocity>(entity).ToString() << "\n";
     }

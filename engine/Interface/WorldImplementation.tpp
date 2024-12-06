@@ -48,4 +48,32 @@ namespace ECSEngine
     {
         return *(T *)entityManager.GetComponentRef(entity, componentManager.GetComponentType<T>().id);
     }
+
+    namespace Implementation
+    {
+        template <typename T1, typename... Ts>
+        static inline void EntityQueryCtorHelper(ComponentSet &components, World &world)
+        {
+            components.set[world.componentManager.GetOrRegisterComponent<T1>().id] = true;
+            if constexpr (sizeof...(Ts) > 0)
+                EntityQueryCtorHelper<Ts...>(components, world);
+        }
+    }
+
+    template <typename... Ts>
+    inline EntityQuery &World::GetEntityQuery()
+    {
+        ComponentSet components = {};
+        Implementation::EntityQueryCtorHelper<Ts...>(components, *this);
+        auto it = entityQueries.find(components);
+        if (it != entityQueries.end())
+        {
+            it->second.Update();
+            return it->second;
+        }
+        EntityQuery query(components, *this);
+        query.Update();
+        entityQueries.emplace(components, query);
+        return entityQueries.at(components);
+    }
 }

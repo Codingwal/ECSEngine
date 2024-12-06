@@ -3,10 +3,11 @@
 #include <vector>
 #include "../Core/Archetype.hpp"
 #include "../Core/EntityManager.hpp"
-#include "../Interface/World.hpp"
 
 namespace ECSEngine
 {
+
+    class World;
     // @brief EntityQueries are used to get all entities that have all components (and optionally more) specified
     class EntityQuery
     {
@@ -31,28 +32,28 @@ namespace ECSEngine
         class Iterable
         {
         public:
-            Iterable(const std::vector<Archetype *> *_archetypes) : archetypes(_archetypes) {}
+            Iterable(const std::vector<Archetype *> &_archetypes) : archetypes(_archetypes) {}
             Iterator begin();
             Iterator end();
 
         private:
-            const std::vector<Archetype *> *archetypes;
+            const std::vector<Archetype *> &archetypes;
         };
 
     public:
-        EntityQuery(World &_world) : world(_world), components() {}
         EntityQuery(ComponentSet _components, World &_world);
         Iterable GetEntities();
-
-    public:
         void Update();
 
-    protected:
-        ComponentSet components;
+    private:
+        EntityQuery(World &_world) : world(_world), components() {}
 
     private:
+        ComponentSet components;
         World &world;
         size_t archetypeCount = 0;
         std::vector<Archetype *> archetypes;
+
+        friend class World;
     };
 }

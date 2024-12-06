@@ -3,7 +3,7 @@
 
 namespace ECSEngine
 {
-    World::World()
+    World::World() : entityQueries()
     {
         componentManager.GetOrRegisterComponent<Entity>();
     }

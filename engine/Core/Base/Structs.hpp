@@ -47,3 +47,12 @@ namespace ECSEngine
         std::bitset<MAX_COMPONENT_COUNT> set = {};
     };
 }
+
+template <>
+struct std::hash<ECSEngine::ComponentSet>
+{
+    size_t operator()(const ECSEngine::ComponentSet &componentSet) const
+    {
+        return hash<std::bitset<MAX_COMPONENT_COUNT>>()(componentSet.set);
+    }
+};

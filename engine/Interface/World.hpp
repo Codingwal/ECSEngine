@@ -3,6 +3,8 @@
 #include "../Core/EntityManager.hpp"
 #include "../Core/ComponentManager.hpp"
 #include "../Core/SystemManager.hpp"
+#include "../EntityQuery/EntityQuery.hpp"
+#include <unordered_map>
 
 namespace ECSEngine
 {
@@ -13,26 +15,30 @@ namespace ECSEngine
         World();
 
         template <typename... Ts>
-        Entity CreateEntity();
-        Entity CreateEntity(ComponentType components[], int count);
-        void DestroyEntity(Entity entity);
+        inline Entity CreateEntity();
+        inline Entity CreateEntity(ComponentType components[], int count);
+        inline void DestroyEntity(Entity entity);
 
         template <typename T>
-        void AddComponent(Entity entity);
+        inline void AddComponent(Entity entity);
         template <typename T>
-        void RemoveComponent(Entity entity);
+        inline void RemoveComponent(Entity entity);
 
         template <typename T>
-        void SetComponentData(Entity entity, T data);
+        inline void SetComponentData(Entity entity, T data);
         template <typename T>
-        const T &GetComponentData(Entity entity) const;
+        inline const T &GetComponentData(Entity entity) const;
         template <typename T>
-        T &GetComponentDataRef(Entity entity) const;
+        inline T &GetComponentDataRef(Entity entity) const;
+
+        template <typename... Ts>
+        inline EntityQuery &GetEntityQuery();
 
     public:
         EntityManager entityManager;
         ComponentManager componentManager;
         SystemManager systemManager;
+        std::unordered_map<ComponentSet, EntityQuery> entityQueries;
 
     private:
         template <typename T1, typename... Ts>
