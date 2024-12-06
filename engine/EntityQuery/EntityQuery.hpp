@@ -15,10 +15,7 @@ namespace ECSEngine
         class Iterator
         {
         public:
-            Iterator(size_t archetypeCount)
-                : archetypeIndex(archetypeCount), archetypes(nullptr)
-            {
-            }
+            Iterator(size_t archetypeCount) : archetypeIndex(archetypeCount), archetypes(nullptr) {}
             Iterator(const std::vector<Archetype *> *_archetypes) : archetypes(_archetypes), archetypeIndex(0), indexInArchetype(0) {}
             Iterator &operator++();
             Entity operator*();
@@ -34,12 +31,12 @@ namespace ECSEngine
         class Iterable
         {
         public:
-            Iterable(const std::vector<Archetype *> &_archetypes) : archetypes(_archetypes) {}
+            Iterable(const std::vector<Archetype *> *_archetypes) : archetypes(_archetypes) {}
             Iterator begin();
             Iterator end();
 
         private:
-            const std::vector<Archetype *> &archetypes;
+            const std::vector<Archetype *> *archetypes;
         };
 
     public:

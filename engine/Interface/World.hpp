@@ -2,6 +2,7 @@
 
 #include "../Core/EntityManager.hpp"
 #include "../Core/ComponentManager.hpp"
+#include "../Core/SystemManager.hpp"
 
 namespace ECSEngine
 {
@@ -31,6 +32,7 @@ namespace ECSEngine
     public:
         EntityManager entityManager;
         ComponentManager componentManager;
+        SystemManager systemManager;
 
     private:
         template <typename T1, typename... Ts>
