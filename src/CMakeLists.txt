@@ -6,7 +6,9 @@ add_library(Engine STATIC
             Core/Archetype.cpp Core/ComponentManager.cpp Core/EntityManager.cpp Core/SystemManager.cpp
             EntityQuery/EntityQuery.cpp
             Interface/World.cpp
-            Graphics/glad.c Graphics/stb_image.cpp Graphics/ShaderProgram.cpp Graphics/Texture.cpp)
+            Graphics/Renderer.cpp Graphics/glad.c Graphics/stb_image.cpp Graphics/ShaderProgram.cpp Graphics/Texture.cpp)
+
+target_link_libraries(Engine ${CMAKE_SOURCE_DIR}/lib/src/libglfw3.a)
 
 target_include_directories(Engine
     INTERFACE

@@ -1,3 +1,5 @@
+#include "Graphics/Renderer.hpp"
+
 #include <iostream>
 #include <math.h>
 #include <glad.h>
@@ -55,7 +57,7 @@ void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-int main()
+void Renderer::Init()
 {
     glfwInit();
 
@@ -70,7 +72,7 @@ int main()
     {
         std::cerr << "Failed to create GLFW window.\n";
         glfwTerminate();
-        return EXIT_FAILURE;
+        return;
     }
     glfwMakeContextCurrent(window);
 
@@ -121,5 +123,4 @@ int main()
 
     glfwDestroyWindow(window);
     glfwTerminate();
-    return EXIT_SUCCESS;
 }

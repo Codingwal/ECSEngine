@@ -2,6 +2,7 @@
 #include <Engine/Interface/World.hpp>
 #include "Components.hpp"
 #include "Systems.hpp"
+#include <Engine/Graphics/Renderer.hpp>
 
 int main(int argc, char **argv)
 {
@@ -34,4 +35,7 @@ int main(int argc, char **argv)
     {
         std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity).ToString() << "; " << world.GetComponentData<Velocity>(entity).ToString() << "\n";
     }
+
+    Renderer renderer;
+    renderer.Init();
 }
