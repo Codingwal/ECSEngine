@@ -1,4 +1,4 @@
-#include "Structs.hpp"
+#include "Core/Base/Structs.hpp"
 
 namespace ECSEngine
 {

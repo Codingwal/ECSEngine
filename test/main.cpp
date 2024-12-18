@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../src/Interface/World.cpp"
+#include <Engine/Interface/World.hpp>
 #include "Components.hpp"
 #include "Systems.hpp"
 

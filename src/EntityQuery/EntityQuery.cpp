@@ -1,5 +1,5 @@
-#include "EntityQuery.hpp"
-#include "../Interface/World.hpp"
+#include "EntityQuery/EntityQuery.hpp"
+#include "Interface/World.hpp"
 
 namespace ECSEngine
 {

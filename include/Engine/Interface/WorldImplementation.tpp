@@ -15,7 +15,7 @@ namespace ECSEngine
         size_t componentCount = sizeof...(Ts);                     // Template arguments count
         ComponentType components[componentCount];                  // Create an array with enough space for all components
         CreateEntityHelper<Ts...>(components, componentCount - 1); // Start recursive array-initialization
-        return CreateEntity(components, componentCount);           // Create the entity with the now filled components array
+        return CreateDefaultEntity(components, componentCount);    // Create the entity with the now filled components array
     }
 
     template <typename T>

@@ -2,9 +2,9 @@
 #include <math.h>
 #include <glad.h>
 #include <glfw3.h>
-#include "stb_image.hpp"
-#include "ShaderProgram.hpp"
-#include "Texture.hpp"
+#include "Graphics/stb_image.hpp"
+#include "Graphics/ShaderProgram.hpp"
+#include "Graphics/Texture.hpp"
 
 #define WIDTH 800
 #define HEIGHT 800

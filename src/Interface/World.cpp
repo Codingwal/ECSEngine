@@ -1,4 +1,4 @@
-#include "World.hpp"
+#include "Interface/World.hpp"
 #include <iostream>
 
 namespace ECSEngine
@@ -8,7 +8,7 @@ namespace ECSEngine
         componentManager.GetOrRegisterComponent<Entity>();
     }
 
-    Entity World::CreateEntity(ComponentType components[], int count)
+    Entity World::CreateDefaultEntity(ComponentType components[], int count)
     {
         return entityManager.CreateEntity(components, count);
     }

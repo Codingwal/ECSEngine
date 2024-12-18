@@ -14,25 +14,25 @@ namespace ECSEngine
     public:
         World();
 
+        Entity CreateDefaultEntity(ComponentType components[], int count);
         template <typename... Ts>
-        inline Entity CreateEntity();
-        inline Entity CreateEntity(ComponentType components[], int count);
-        inline void DestroyEntity(Entity entity);
+        Entity CreateEntity();
+        void DestroyEntity(Entity entity);
 
         template <typename T>
-        inline void AddComponent(Entity entity);
+        void AddComponent(Entity entity);
         template <typename T>
-        inline void RemoveComponent(Entity entity);
+        void RemoveComponent(Entity entity);
 
         template <typename T>
-        inline void SetComponentData(Entity entity, T data);
+        void SetComponentData(Entity entity, T data);
         template <typename T>
-        inline const T &GetComponentData(Entity entity) const;
+        const T &GetComponentData(Entity entity) const;
         template <typename T>
-        inline T &GetComponentDataRef(Entity entity) const;
+        T &GetComponentDataRef(Entity entity) const;
 
         template <typename... Ts>
-        inline EntityQuery &GetEntityQuery();
+        EntityQuery &GetEntityQuery();
 
     public:
         EntityManager entityManager;

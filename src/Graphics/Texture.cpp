@@ -1,6 +1,6 @@
-#include "Texture.hpp"
+#include "Graphics/Texture.hpp"
 #include <iostream>
-#include "stb_image.hpp"
+#include "Graphics/stb_image.hpp"
 #include <cassert>
 
 Texture::Texture(const char *filePath, GLuint format)

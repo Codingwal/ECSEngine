@@ -11,7 +11,7 @@ namespace ECSEngine
     // @brief Identifies an Entity
     struct Entity
     {
-        Entity() = default;
+        Entity() : id(-1) {}
         Entity(uint32_t _id) : id(_id) {}
         friend const bool operator<(const Entity &lhs, const Entity &rhs);
         std::string ToString() const;

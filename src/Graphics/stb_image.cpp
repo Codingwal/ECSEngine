@@ -1,2 +1,2 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.hpp"
+#include "Graphics/stb_image.hpp"
