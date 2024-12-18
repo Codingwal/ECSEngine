@@ -33,6 +33,4 @@ Texture::Texture(const char *filePath, GLuint format)
         std::cerr << "Failed to load texture.\n";
 
     stbi_image_free(data);
-
-    std::cout << "Created texture with id " << id << "\n";
 }

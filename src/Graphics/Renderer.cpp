@@ -67,7 +67,7 @@ void Renderer::Init()
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create window, handle errors and add it to the context
-    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL Window", NULL, NULL);
+    window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL Window", NULL, NULL);
     if (window == NULL)
     {
         std::cerr << "Failed to create GLFW window.\n";
@@ -81,19 +81,22 @@ void Renderer::Init()
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    ShaderProgram shader(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+    shader.init(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
 
     stbi_set_flip_vertically_on_load(true);
-    Texture texture1(CONTAINER_JPG_PATH, GL_RGB);
-    Texture texture2(SMILEY_PNG_PATH, GL_RGBA);
+    textures.emplace_back(CONTAINER_JPG_PATH, GL_RGB);
+    textures.emplace_back(SMILEY_PNG_PATH, GL_RGBA);
 
-    GLuint vao, vbo, ebo; // vertex array object, vertex buffer object
+    vao, vbo, ebo; // vertex array object, vertex buffer object
     createVAOandVBO(&vao, &vbo, &ebo);
 
     shader.use();
     shader.setInt("tex1", 0);
     shader.setInt("tex2", 1);
+}
 
+void Renderer::Run()
+{
     while (!glfwWindowShouldClose(window))
     {
         // Clear the screen
@@ -103,9 +106,9 @@ void Renderer::Init()
         shader.use();
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, texture1.id);
+        glBindTexture(GL_TEXTURE_2D, textures.at(0).id);
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, texture2.id);
+        glBindTexture(GL_TEXTURE_2D, textures.at(1).id);
 
         glBindVertexArray(vao);
 
@@ -123,4 +126,8 @@ void Renderer::Init()
 
     glfwDestroyWindow(window);
     glfwTerminate();
+}
+
+void Renderer::Dispose()
+{
 }

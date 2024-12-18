@@ -34,7 +34,7 @@ void validateShaderProgram(GLuint shaderProgram, const char *errorMsg)
         std::cerr << errorMsg << infoLog << "\n";
     }
 }
-ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath)
+void ShaderProgram::init(const char *vertexPath, const char *fragmentPath)
 {
     std::string vertexShaderSourceString = readFile(vertexPath);
     const char *vertexShaderSource = vertexShaderSourceString.c_str();
