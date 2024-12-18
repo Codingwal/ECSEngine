@@ -8,7 +8,7 @@ add_library(Engine STATIC
             Interface/World.cpp
             Graphics/Renderer.cpp Graphics/glad.c Graphics/stb_image.cpp Graphics/ShaderProgram.cpp Graphics/Texture.cpp)
 
-target_link_libraries(Engine ${CMAKE_SOURCE_DIR}/lib/src/libglfw3.a)
+target_link_libraries(Engine C:/Users/flori/Documents/Coding/C++/ECSEngine/lib/src/libglfw3.a)
 
 target_include_directories(Engine
     INTERFACE

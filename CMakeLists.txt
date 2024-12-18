@@ -3,8 +3,13 @@ project(ECSEngine)
 
 include_directories(include)
 
-add_executable(main test/main.cpp)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-target_link_libraries(main Engine)
+# add_subdirectory(test/AccelerationSimulation)
+add_subdirectory(test/Rendering)
 
 add_subdirectory(src)
+
+target_link_libraries(main Engine)

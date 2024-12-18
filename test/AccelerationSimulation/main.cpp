@@ -35,7 +35,4 @@ int main(int argc, char **argv)
     {
         std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity).ToString() << "; " << world.GetComponentData<Velocity>(entity).ToString() << "\n";
     }
-
-    Renderer renderer;
-    renderer.Init();
 }

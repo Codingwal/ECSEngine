@@ -1,4 +1,5 @@
 #include "Graphics/ShaderProgram.hpp"
+#include <cassert>
 
 std::string readFile(const char *fileName)
 {
@@ -67,6 +68,7 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::use()
 {
+    assert(id != -1 && "Shader has not been correctly constructed.");
     glUseProgram(id);
 }
 

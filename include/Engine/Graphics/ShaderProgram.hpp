@@ -11,6 +11,7 @@ class ShaderProgram
 public:
     unsigned int id;
 
+    ShaderProgram() : id(-1) {}
     ShaderProgram(const char *vertexPath, const char *fragmentPath);
     ~ShaderProgram();
 
