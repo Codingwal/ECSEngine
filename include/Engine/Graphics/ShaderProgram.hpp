@@ -12,7 +12,7 @@ public:
     ShaderProgram() : id(-1) {}
     ~ShaderProgram();
 
-    void init(const char *vertexPath, const char *fragmentPath);
+    void init(const std::string &vertexPath, const std::string &fragmentPath);
     void use();
 
     void setBool(const char *name, bool value) const;

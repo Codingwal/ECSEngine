@@ -5,7 +5,7 @@ std::string readFile(const char *fileName)
 {
     std::ifstream stream(fileName);
     if (!stream)
-        std::cerr << "Failed to open file.\n";
+        std::cerr << "Failed to open file \"" << fileName << "\".\n";
     std::stringstream buffer;
     buffer << stream.rdbuf();
     stream.close();
@@ -34,16 +34,16 @@ void validateShaderProgram(GLuint shaderProgram, const char *errorMsg)
         std::cerr << errorMsg << infoLog << "\n";
     }
 }
-void ShaderProgram::init(const char *vertexPath, const char *fragmentPath)
+void ShaderProgram::init(const std::string &vertexPath, const std::string &fragmentPath)
 {
-    std::string vertexShaderSourceString = readFile(vertexPath);
+    std::string vertexShaderSourceString = readFile(vertexPath.c_str());
     const char *vertexShaderSource = vertexShaderSourceString.c_str();
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
     glCompileShader(vertexShader);
     validateShader(vertexShader, "Failed to compile vertex shader.\n");
 
-    std::string fragmentShaderSourceString = readFile(fragmentPath);
+    std::string fragmentShaderSourceString = readFile(fragmentPath.c_str());
     const char *fragmentShaderSource = fragmentShaderSourceString.c_str();
     GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);

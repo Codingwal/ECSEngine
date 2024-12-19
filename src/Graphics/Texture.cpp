@@ -1,9 +1,8 @@
 #include "Graphics/Texture.hpp"
 #include <iostream>
 #include "Graphics/stb_image.hpp"
-#include <cassert>
 
-Texture::Texture(const char *filePath, GLuint format)
+Texture::Texture(const std::string &filePath, GLuint format)
 {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);
@@ -14,7 +13,7 @@ Texture::Texture(const char *filePath, GLuint format)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     int width, height, channelsCount;
-    unsigned char *data = stbi_load(filePath, &width, &height, &channelsCount, 0);
+    unsigned char *data = stbi_load(filePath.c_str(), &width, &height, &channelsCount, 0);
     if (data)
     {
         if (channelsCount == 1 && format != GL_RED ||

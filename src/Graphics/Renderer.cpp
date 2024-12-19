@@ -11,11 +11,8 @@
 #define WIDTH 800
 #define HEIGHT 800
 
-#define BASE_PATH "C:\\Users\\flori\\Documents\\Coding\\C++\\OpenGL\\"
-#define VERTEX_SHADER_PATH "C:\\Users\\flori\\Documents\\Coding\\C++\\OpenGL\\shaders\\shader.vert"
-#define FRAGMENT_SHADER_PATH "C:\\Users\\flori\\Documents\\Coding\\C++\\OpenGL\\shaders\\shader.frag"
-#define CONTAINER_JPG_PATH "C:\\Users\\flori\\Documents\\Coding\\C++\\OpenGL\\container.jpg"
-#define SMILEY_PNG_PATH "C:\\Users\\flori\\Documents\\Coding\\C++\\OpenGL\\awesomeface.png"
+#define DEFAULT_SHADER_FRAG "default.frag"
+#define DEFAULT_SHADER_VERT "default.vert"
 
 void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
 {
@@ -57,8 +54,12 @@ void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-void Renderer::Init()
+void Renderer::Init(const std::string &ressourcesFolderPath)
 {
+    pathRessourcesFolder = ressourcesFolderPath;
+    pathShadersFolder = pathRessourcesFolder + "shaders/";
+    pathImagesFolder = pathRessourcesFolder + "images/";
+
     glfwInit();
 
     // OpenGL version 3.3 and only the modern functions
@@ -81,11 +82,11 @@ void Renderer::Init()
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    shader.init(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
+    shader.init(pathShadersFolder + DEFAULT_SHADER_VERT, pathShadersFolder + DEFAULT_SHADER_FRAG);
 
     stbi_set_flip_vertically_on_load(true);
-    textures.emplace_back(CONTAINER_JPG_PATH, GL_RGB);
-    textures.emplace_back(SMILEY_PNG_PATH, GL_RGBA);
+    textures.emplace_back(pathImagesFolder + "container.jpg", GL_RGB);
+    textures.emplace_back(pathImagesFolder + "awesomeface.png", GL_RGBA);
 
     vao, vbo, ebo; // vertex array object, vertex buffer object
     createVAOandVBO(&vao, &vbo, &ebo);
