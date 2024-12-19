@@ -20,7 +20,7 @@ namespace ECSEngine
     }
     void World::Run(int maxFrameCount)
     {
-        int frames;
+        int frames = 0;
         bool stop = false;
         float time = 0;
         while (!renderer.ShouldStop() && frames < maxFrameCount)
@@ -31,7 +31,6 @@ namespace ECSEngine
 
             systemManager.Update(*this, deltaTime);
             renderer.Update();
-
             frames++;
         }
     }
