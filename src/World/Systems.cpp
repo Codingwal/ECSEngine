@@ -27,7 +27,7 @@ namespace ECSEngine
         world.renderer.objects.clear();
         world.renderer.objects.reserve(world.entityManager.GetEntityCount());
 
-        auto &query = world.GetEntityQuery<TransformMatrix, Texture>();
+        auto &query = world.GetEntityQuery<TransformMatrix>();
         for (Entity entity : query.GetEntities())
         {
             Object obj;

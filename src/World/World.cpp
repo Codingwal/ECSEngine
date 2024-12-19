@@ -15,11 +15,12 @@ namespace ECSEngine
     {
         renderer.Dispose();
     }
-    void World::Run()
+    void World::Run(int maxFrameCount)
     {
+        int frames;
         bool stop = false;
         float time = 0;
-        while (!renderer.ShouldStop())
+        while (!renderer.ShouldStop() && frames < maxFrameCount)
         {
             float newTime = renderer.GetTime();
             float deltaTime = newTime - time;
@@ -27,6 +28,8 @@ namespace ECSEngine
 
             systemManager.Update(*this, deltaTime);
             renderer.Update();
+
+            frames++;
         }
     }
 

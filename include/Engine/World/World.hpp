@@ -15,7 +15,7 @@ namespace ECSEngine
     public:
         World();
         ~World();
-        void Run();
+        void Run(int maxFrameCount);
 
         Entity CreateDefaultEntity(ComponentType components[], int count);
         template <typename... Ts>

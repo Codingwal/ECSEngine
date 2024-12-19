@@ -16,7 +16,7 @@ public:
     Float4 &
     operator[](int i);
     const Float4 &operator[](int i) const;
-    std::array<float, 16> ToColumnMajorArray();
+    std::array<float, 16> ToColumnMajorArray() const;
 
     static Float4x4 Identity();
     static Float4x4 Translate(Float4x4 mat, const Float3 &vec);

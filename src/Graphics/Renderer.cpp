@@ -109,20 +109,12 @@ void ECSEngine::Renderer::Update()
 
     glBindVertexArray(vao);
 
-    Float4x4 trans = Float4x4::Identity();
-    trans = Float4x4::Translate(trans, Float3(0.4, -0.4, 0));
-    trans = Float4x4::Rotate(trans, GetTime(), Float3(0, 0, 1));
-    GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
-
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-    // trans = Float4x4::Scale(Float4x4::Identity(), Float3(0.5, 1, 0.5));
-    // trans = Float4x4::Translate(trans, Float3(sin(2 * glfwGetTime()) * 0.7f, 0.5, 0));
-    // transformLoc = glGetUniformLocation(shader.id, "transform");
-    // glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
-
-    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    for (const auto &obj : objects)
+    {
+        GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, obj.transformMatrix.ToColumnMajorArray().begin());
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    }
 
     glBindVertexArray(0);
 

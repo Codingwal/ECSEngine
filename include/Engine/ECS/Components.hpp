@@ -9,6 +9,7 @@ namespace ECSEngine
         Float3 position;
         Float3 rotation;
         Float3 scale;
+        Transform(Float3 pos) : position(pos), scale(Float3(1)), rotation(Float3()) {}
     };
     struct TransformMatrix
     {
