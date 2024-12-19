@@ -7,6 +7,7 @@
 #include "Graphics/stb_image.hpp"
 #include "Graphics/ShaderProgram.hpp"
 #include "Graphics/Texture.hpp"
+#include "Math/Math.hpp"
 
 #define WIDTH 800
 #define HEIGHT 800
@@ -18,10 +19,10 @@ void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
 {
     GLfloat vertices[] =
         {
-            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // Upper right corner
-            0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // Lower right corner
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Lower left corner
-            -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,  // Upper left corner
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // Upper right corner
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  // Lower right corner
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Lower left corner
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,  // Upper left corner
         };
     unsigned int indices[] = {
         0, 1, 3, // first triangle
@@ -41,14 +42,11 @@ void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // The value at location 0 in the fragment shader is the position vec3
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-    // The value at location 1 in the fragment shader is the color vec3
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float)));
+    // The value at location 1 in the fragment shader is the texture coords vec2
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    // The value at location 2 in the fragment shader is the texture coords vec2
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
     // unbind the vao & vbo so they are not accidentally modified
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -105,6 +103,11 @@ void Renderer::Run()
         glClear(GL_COLOR_BUFFER_BIT);
 
         shader.use();
+
+        Float4x4 trans = Float4x4::Scale(Float4x4::Identity(), Float3(1, 0.5, 0.5));
+        trans = Float4x4::Translate(trans, Float3(0, sin(2 * glfwGetTime()) * 0.7f, 0));
+        GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textures.at(0).id);
