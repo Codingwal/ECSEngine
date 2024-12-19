@@ -1,6 +1,4 @@
-#pragma once
-
-#include "Math/Float2.hpp"
+#include "Math/FloatX.hpp"
 
 Float2::Float2(float _x, float _y)
 {
@@ -13,6 +11,19 @@ Float2::Float2(float value)
     y = value;
 }
 float &Float2::operator[](int i)
+{
+    switch (i)
+    {
+    case 0:
+        return x;
+    case 1:
+        return y;
+    default:
+        std::cerr << "Invalid index " << i << "in Float4.\n";
+        return x;
+    }
+}
+const float &Float2::operator[](int i) const
 {
     switch (i)
     {
@@ -65,7 +76,7 @@ Float2 operator/(const Float2 &lhs, float scalar)
 {
     return Float2(lhs.x / scalar, lhs.y / scalar);
 }
-std::ostream &operator<<(std::ostream &os, Float2 v)
+std::ostream &operator<<(std::ostream &os, const Float2 &v)
 {
     os << "(" << v.x << ", " << v.y << ")";
     return os;

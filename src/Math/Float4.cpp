@@ -1,4 +1,4 @@
-#include "Math/Float4.hpp"
+#include "Math/FloatX.hpp"
 
 Float4::Float4(float _x, float _y, float _z, float _w)
 {
@@ -22,6 +22,23 @@ Float4::Float4(Float3 vec, float _w)
     w = _w;
 }
 float &Float4::operator[](int i)
+{
+    switch (i)
+    {
+    case 0:
+        return x;
+    case 1:
+        return y;
+    case 2:
+        return z;
+    case 3:
+        return w;
+    default:
+        std::cerr << "Invalid index " << i << "in Float4.\n";
+        return x;
+    }
+}
+const float &Float4::operator[](int i) const
 {
     switch (i)
     {
@@ -86,7 +103,7 @@ Float4 operator/(const Float4 &vec, float scalar)
 {
     return Float4(vec.x / scalar, vec.y / scalar, vec.z / scalar, vec.w / scalar);
 }
-std::ostream &operator<<(std::ostream &os, Float4 vec)
+std::ostream &operator<<(std::ostream &os, const Float4 &vec)
 {
     os << "(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
     return os;

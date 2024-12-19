@@ -1,4 +1,4 @@
-#include "Math/Float3.hpp"
+#include "Math/FloatX.hpp"
 
 Float3::Float3(float _x, float _y, float _z)
 {
@@ -19,6 +19,21 @@ Float3::Float3(Float2 vec, float _z)
     z = _z;
 }
 float &Float3::operator[](int i)
+{
+    switch (i)
+    {
+    case 0:
+        return x;
+    case 1:
+        return y;
+    case 2:
+        return z;
+    default:
+        std::cerr << "Invalid index " << i << "in Float4.\n";
+        return x;
+    }
+}
+const float &Float3::operator[](int i)const
 {
     switch (i)
     {
@@ -77,7 +92,7 @@ Float3 operator/(const Float3 &lhs, float scalar)
 {
     return Float3(lhs.x / scalar, lhs.y / scalar, lhs.z / scalar);
 }
-std::ostream &operator<<(std::ostream &os, Float3 v)
+std::ostream &operator<<(std::ostream &os, const Float3 &v)
 {
     os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
     return os;

@@ -4,20 +4,16 @@
 
 int main(int argc, char **argv)
 {
-    Float4 vec4(2, 3, 4, 1);
     Float4x4 matrix = Float4x4::Identity();
-    std::cout << vec4 << "\n";
+    matrix = Float4x4::Translate(matrix, Float3(1, 2, 3));
 
-    vec4 = matrix * vec4;
-    std::cout << vec4 << "\n";
-
-    matrix[3][0] = 5;
-    matrix[3][1] = 2;
-    matrix[3][2] = 4;
-    std::cout << matrix << "\n";
-
-    vec4 = matrix * vec4;
-    std::cout << vec4 << "\n";
+    auto arr = matrix.ToColumnMajorArray();
+    for (int i = 0; i < arr.size(); i++)
+    {
+        std::cout << arr[i] << ", ";
+        if (i % 4 == 3)
+            std::cout << "\n";
+    }
 
     // Renderer renderer;
     // renderer.Init();
