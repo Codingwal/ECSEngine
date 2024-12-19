@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../Core/EntityManager.hpp"
-#include "../Core/ComponentManager.hpp"
-#include "../Core/SystemManager.hpp"
-#include "../EntityQuery/EntityQuery.hpp"
+#include "ECS/EntityManager.hpp"
+#include "ECS/ComponentManager.hpp"
+#include "ECS/SystemManager.hpp"
+#include "EntityQuery/EntityQuery.hpp"
 #include <unordered_map>
 
 namespace ECSEngine

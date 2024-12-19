@@ -1,4 +1,4 @@
-#include "Core/ComponentManager.hpp"
+#include "ECS/ComponentManager.hpp"
 #include <cassert>
 #include <iostream>
 

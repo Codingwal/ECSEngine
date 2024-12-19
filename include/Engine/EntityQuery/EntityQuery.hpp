@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "../Core/Archetype.hpp"
-#include "../Core/EntityManager.hpp"
+#include "ECS/Archetype.hpp"
+#include "ECS/EntityManager.hpp"
 
 namespace ECSEngine
 {

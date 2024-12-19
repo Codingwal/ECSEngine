@@ -1,53 +1,56 @@
 #pragma once
 
-#include <string>
-#include "Vector3.hpp"
+#include <iostream>
+#include <Engine/Math/Math.hpp>
 
 struct Position
 {
-    Vector3 value;
-    Position(Vector3 _value)
+    Float3 value;
+    Position(Float3 _value)
     {
         value = _value;
     }
     Position(float x, float y, float z)
     {
-        value = Vector3(x, y, z);
+        value = Float3(x, y, z);
     }
-    std::string ToString() const
+    friend std::ostream &operator<<(std::ostream &os, const Position &pos)
     {
-        return "Position: " + value.ToString();
+        os << "Position: " << pos.value;
+        return os;
     }
 };
 struct Velocity
 {
-    Vector3 value;
-    Velocity(Vector3 _value)
+    Float3 value;
+    Velocity(Float3 _value)
     {
         value = _value;
     }
     Velocity(float x, float y, float z)
     {
-        value = Vector3(x, y, z);
+        value = Float3(x, y, z);
     }
-    std::string ToString() const
+    friend std::ostream &operator<<(std::ostream &os, const Velocity &vel)
     {
-        return "Velocity: " + value.ToString();
+        os << "Velocity: " << vel.value;
+        return os;
     }
 };
 struct Acceleration
 {
-    Vector3 value;
-    Acceleration(Vector3 _value)
+    Float3 value;
+    Acceleration(Float3 _value)
     {
         value = _value;
     }
     Acceleration(float x, float y, float z)
     {
-        value = Vector3(x, y, z);
+        value = Float3(x, y, z);
     }
-    std::string ToString() const
+    friend std::ostream &operator<<(std::ostream &os, const Acceleration &acc)
     {
-        return "Acceleration: " + value.ToString();
+        os << "Acceleration: " << acc.value;
+        return os;
     }
 };

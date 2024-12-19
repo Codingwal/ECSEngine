@@ -1,4 +1,4 @@
-#include "Interface/World.hpp"
+#include "World/World.hpp"
 #include <iostream>
 
 namespace ECSEngine

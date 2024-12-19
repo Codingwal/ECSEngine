@@ -1,5 +1,5 @@
 #include <iostream>
-#include <Engine/Interface/World.hpp>
+#include <Engine/World/World.hpp>
 #include "Components.hpp"
 #include "Systems.hpp"
 #include <Engine/Graphics/Renderer.hpp>
@@ -33,6 +33,6 @@ int main(int argc, char **argv)
 
     for (Entity entity : world.GetEntityQuery<Position, Velocity>().GetEntities())
     {
-        std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity).ToString() << "; " << world.GetComponentData<Velocity>(entity).ToString() << "\n";
+        std::cout << entity.ToString() << ": " << world.GetComponentData<Position>(entity) << "; " << world.GetComponentData<Velocity>(entity) << "\n";
     }
 }

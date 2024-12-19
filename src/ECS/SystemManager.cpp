@@ -1,4 +1,4 @@
-#include "Core/SystemManager.hpp"
+#include "ECS/SystemManager.hpp"
 #include <iostream>
 
 namespace ECSEngine

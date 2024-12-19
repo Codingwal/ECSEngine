@@ -1,5 +1,5 @@
-#include "Core/Archetype.hpp"
-#include "Core/Base/Constants.hpp"
+#include "ECS/Archetype.hpp"
+#include "ECS/Base/Constants.hpp"
 #include <iostream>
 #include <cassert>
 

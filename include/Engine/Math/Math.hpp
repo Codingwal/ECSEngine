@@ -1,4 +1,6 @@
 #pragma once
 
-#include "Math/FloatX.hpp"
-#include "Math/Float4x4.hpp"
+#include "Constants.hpp"
+
+#include "FloatX.hpp"
+#include "Float4x4.hpp"

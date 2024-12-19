@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Interface/World.hpp>
+#include <Engine/World/World.hpp>
 #include "Components.hpp"
 
 using namespace ECSEngine;
