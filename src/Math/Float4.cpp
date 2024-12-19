@@ -1,4 +1,5 @@
 #include "Math/FloatX.hpp"
+#include <math.h>
 
 Float4::Float4(float _x, float _y, float _z, float _w)
 {
@@ -55,6 +56,21 @@ const float &Float4::operator[](int i) const
         return x;
     }
 }
+
+float Float4::Magnitude() const
+{
+    return sqrt(x * x + y * y + z * z + w * w);
+}
+float Float4::MagnitudeSqr() const
+{
+    return x * x + y * y + z * z + w * w;
+}
+Float4 Float4::Normalized() const
+{
+    float s = Magnitude();
+    return Float4(x / s, y / s, z / s, w / s);
+}
+
 Float4 &Float4::operator+=(const Float4 &other)
 {
     x += other.x;
@@ -97,7 +113,7 @@ Float4 operator-(const Float4 &lhs, const Float4 &rhs)
 }
 Float4 operator*(const Float4 &vec, float scalar)
 {
-    return Float4(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w / scalar);
+    return Float4(vec.x * scalar, vec.y * scalar, vec.z * scalar, vec.w * scalar);
 }
 Float4 operator/(const Float4 &vec, float scalar)
 {

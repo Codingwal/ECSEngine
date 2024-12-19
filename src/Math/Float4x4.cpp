@@ -1,4 +1,5 @@
 #include "Math/Float4x4.hpp"
+#include <math.h>
 
 Float4x4::Float4x4(Float4 _v1, Float4 _v2, Float4 _v3, Float4 _v4)
 {
@@ -73,17 +74,46 @@ Float4x4 Float4x4::Identity()
 }
 Float4x4 Float4x4::Translate(Float4x4 mat, const Float3 &vec)
 {
-    mat[3][0] += vec.x;
-    mat[3][1] += vec.y;
-    mat[3][2] += vec.z;
+    mat[3] = mat[0] * vec[0] + mat[1] * vec[1] + mat[2] * vec[2] + mat[3];
     return mat;
 }
 Float4x4 Float4x4::Scale(Float4x4 mat, const Float3 &vec)
 {
-    mat[0][0] *= vec.x;
-    mat[1][1] *= vec.y;
-    mat[2][2] *= vec.z;
+    mat[0] *= vec.x;
+    mat[1] *= vec.y;
+    mat[2] *= vec.z;
     return mat;
+}
+// Copied from https://github.com/g-truc/glm/blob/78f686b4be6c623df829db58b974bf8d79461987/glm/gtc/matrix_transform.inl
+Float4x4 Float4x4::Rotate(Float4x4 mat, float angle, Float3 axis)
+{
+    const float a = angle;
+    const float c = cos(a);
+    const float s = sin(a);
+
+    axis = axis.Normalized();
+    Float3 tmp = axis * (1 - c);
+
+    Float4x4 rotate = Float4x4();
+    rotate[0][0] = c + tmp[0] * axis[0];
+    rotate[0][1] = 0 + tmp[0] * axis[1] + s * axis[2];
+    rotate[0][2] = 0 + tmp[0] * axis[2] - s * axis[1];
+
+    rotate[1][0] = 0 + tmp[1] * axis[0] - s * axis[2];
+    rotate[1][1] = c + tmp[1] * axis[1];
+    rotate[1][2] = 0 + tmp[1] * axis[2] + s * axis[0];
+
+    rotate[2][0] = 0 + tmp[2] * axis[0] + s * axis[1];
+    rotate[2][1] = 0 + tmp[2] * axis[1] - s * axis[0];
+    rotate[2][2] = c + tmp[2] * axis[2];
+
+    Float4x4 result = Float4x4();
+    result[0] = mat[0] * rotate[0][0] + mat[1] * rotate[0][1] + mat[2] * rotate[0][2];
+    result[1] = mat[0] * rotate[1][0] + mat[1] * rotate[1][1] + mat[2] * rotate[1][2];
+    result[2] = mat[0] * rotate[2][0] + mat[1] * rotate[2][1] + mat[2] * rotate[2][2];
+    result[3] = mat[3];
+
+    return result;
 }
 
 Float4 operator*(const Float4x4 &m, const Float4 &v)

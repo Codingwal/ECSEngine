@@ -1,4 +1,5 @@
 #include "Math/FloatX.hpp"
+#include <math.h>
 
 Float3::Float3(float _x, float _y, float _z)
 {
@@ -33,7 +34,7 @@ float &Float3::operator[](int i)
         return x;
     }
 }
-const float &Float3::operator[](int i)const
+const float &Float3::operator[](int i) const
 {
     switch (i)
     {
@@ -48,6 +49,21 @@ const float &Float3::operator[](int i)const
         return x;
     }
 }
+
+float Float3::Magnitude() const
+{
+    return sqrt(x * x + y * y + z * z);
+}
+float Float3::MagnitudeSqr() const
+{
+    return x * x + y * y + z * z;
+}
+Float3 Float3::Normalized() const
+{
+    float s = Magnitude();
+    return Float3(x / s, y / s, z / s);
+}
+
 Float3 &Float3::operator+=(const Float3 &other)
 {
     x += other.x;

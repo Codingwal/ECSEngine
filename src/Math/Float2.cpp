@@ -1,4 +1,5 @@
 #include "Math/FloatX.hpp"
+#include <math.h>
 
 Float2::Float2(float _x, float _y)
 {
@@ -36,6 +37,21 @@ const float &Float2::operator[](int i) const
         return x;
     }
 }
+
+float Float2::Magnitude() const
+{
+    return sqrt(x * x + y * y);
+}
+float Float2::MagnitudeSqr() const
+{
+    return x * x + y * y;
+}
+Float2 Float2::Normalized() const
+{
+    float s = Magnitude();
+    return Float2(x / s, y / s);
+}
+
 Float2 &Float2::operator+=(const Float2 &other)
 {
     x += other.x;

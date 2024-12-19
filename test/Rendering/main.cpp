@@ -2,18 +2,19 @@
 #include <Engine/Math/Math.hpp>
 #include <iostream>
 
+#define PI 3.1415926535
+
 int main(int argc, char **argv)
 {
-    // Float4x4 matrix = Float4x4::Identity();
-    // matrix = Float4x4::Translate(matrix, Float3(1, 2, 3));
+    Float4x4 mat = Float4x4::Identity();
+    mat = Float4x4::Rotate(mat, (float)90 / (float)180 * PI, Float3(0, 0, 1));
+    std::cout << "\n"
+              << mat << "\n";
 
-    // auto arr = matrix.ToColumnMajorArray();
-    // for (int i = 0; i < arr.size(); i++)
-    // {
-    //     std::cout << arr[i] << ", ";
-    //     if (i % 4 == 3)
-    //         std::cout << "\n";
-    // }
+    Float4 vec = Float4(2, 0, 0, 1);
+    vec = mat * vec;
+    std::cout << "\n"
+              << vec << "\n";
 
     Renderer renderer;
     renderer.Init("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/");
