@@ -9,10 +9,15 @@ namespace ECSEngine
         Float3 position;
         Float3 rotation;
         Float3 scale;
-        Transform(Float3 pos) : position(pos), scale(Float3(1)), rotation(Float3()) {}
+        Transform(Float3 pos, Float3 rot, Float3 scl) : position(pos), rotation(rot), scale(scl) {}
     };
     struct TransformMatrix
     {
         Float4x4 matrix;
+    };
+    struct PhysicsObject
+    {
+        Float3 velocity;
+        PhysicsObject(Float3 vel) : velocity(vel) {}
     };
 }

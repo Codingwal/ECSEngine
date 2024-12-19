@@ -6,10 +6,13 @@ namespace ECSEngine
 {
     World::World() : entityQueries()
     {
+        renderer.Init("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/");
+
         componentManager.GetOrRegisterComponent<Entity>();
+
         systemManager.RegisterSystem<UpdateTransformMatrix>();
         systemManager.RegisterSystem<GraphicsSystem>();
-        renderer.Init("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/");
+        systemManager.RegisterSystem<PhysicsSystem>();
     }
     World::~World()
     {

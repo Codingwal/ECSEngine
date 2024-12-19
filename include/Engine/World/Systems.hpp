@@ -14,4 +14,8 @@ namespace ECSEngine
     {
         void Update(World &world, float deltaTime);
     };
+    class PhysicsSystem : public ECSEngine::ISystem
+    {
+        void Update(World &world, float deltaTime);
+    };
 }
