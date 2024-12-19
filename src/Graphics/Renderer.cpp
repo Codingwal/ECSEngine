@@ -52,7 +52,7 @@ void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-void Renderer::Init(const std::string &ressourcesFolderPath)
+void ECSEngine::Renderer::Init(const std::string &ressourcesFolderPath)
 {
     pathRessourcesFolder = ressourcesFolderPath;
     pathShadersFolder = pathRessourcesFolder + "shaders/";
@@ -83,8 +83,8 @@ void Renderer::Init(const std::string &ressourcesFolderPath)
     shader.init(pathShadersFolder + DEFAULT_SHADER_VERT, pathShadersFolder + DEFAULT_SHADER_FRAG);
 
     stbi_set_flip_vertically_on_load(true);
-    textures.emplace_back(pathImagesFolder + "container.jpg", GL_RGB);
-    textures.emplace_back(pathImagesFolder + "awesomeface.png", GL_RGBA);
+    textures.push_back(Texture(pathImagesFolder + "container.jpg", GL_RGB));
+    textures.push_back(Texture(pathImagesFolder + "awesomeface.png", GL_RGBA));
 
     vao, vbo, ebo; // vertex array object, vertex buffer object
     createVAOandVBO(&vao, &vbo, &ebo);
@@ -94,44 +94,44 @@ void Renderer::Init(const std::string &ressourcesFolderPath)
     shader.setInt("tex2", 1);
 }
 
-void Renderer::Run()
+void ECSEngine::Renderer::Update()
 {
-    while (!glfwWindowShouldClose(window))
-    {
-        // Clear the screen
-        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+    // Clear the screen
+    glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 
-        shader.use();
+    shader.use();
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textures.at(0).id);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, textures.at(1).id);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, textures.at(0).id);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, textures.at(1).id);
 
-        glBindVertexArray(vao);
+    glBindVertexArray(vao);
 
-        Float4x4 trans = Float4x4::Identity();
-        trans = Float4x4::Translate(trans, Float3(0.4, -0.4, 0));
-        trans = Float4x4::Rotate(trans, (float)glfwGetTime(), Float3(0, 0, 1));
-        GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
+    Float4x4 trans = Float4x4::Identity();
+    trans = Float4x4::Translate(trans, Float3(0.4, -0.4, 0));
+    trans = Float4x4::Rotate(trans, GetTime(), Float3(0, 0, 1));
+    GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // trans = Float4x4::Scale(Float4x4::Identity(), Float3(0.5, 1, 0.5));
-        // trans = Float4x4::Translate(trans, Float3(sin(2 * glfwGetTime()) * 0.7f, 0.5, 0));
-        // transformLoc = glGetUniformLocation(shader.id, "transform");
-        // glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
+    // trans = Float4x4::Scale(Float4x4::Identity(), Float3(0.5, 1, 0.5));
+    // trans = Float4x4::Translate(trans, Float3(sin(2 * glfwGetTime()) * 0.7f, 0.5, 0));
+    // transformLoc = glGetUniformLocation(shader.id, "transform");
+    // glUniformMatrix4fv(transformLoc, 1, GL_FALSE, trans.ToColumnMajorArray().begin());
 
-        // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        glBindVertexArray(0);
+    glBindVertexArray(0);
 
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+}
 
+void ECSEngine::Renderer::Dispose()
+{
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
     glDeleteBuffers(1, &ebo);
@@ -139,7 +139,11 @@ void Renderer::Run()
     glfwDestroyWindow(window);
     glfwTerminate();
 }
-
-void Renderer::Dispose()
+float ECSEngine::Renderer::GetTime()
 {
+    return (float)glfwGetTime();
+}
+bool ECSEngine::Renderer::ShouldStop()
+{
+    return glfwWindowShouldClose(window);
 }

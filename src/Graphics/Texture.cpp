@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Graphics/stb_image.hpp"
 
-Texture::Texture(const std::string &filePath, GLuint format)
+ECSEngine::Texture::Texture(const std::string &filePath, GLuint format)
 {
     glGenTextures(1, &id);
     glBindTexture(GL_TEXTURE_2D, id);

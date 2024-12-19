@@ -5,6 +5,7 @@
 #include "ECS/SystemManager.hpp"
 #include "EntityQuery/EntityQuery.hpp"
 #include <unordered_map>
+#include "Graphics/Renderer.hpp"
 
 namespace ECSEngine
 {
@@ -13,6 +14,8 @@ namespace ECSEngine
     {
     public:
         World();
+        ~World();
+        void Run();
 
         Entity CreateDefaultEntity(ComponentType components[], int count);
         template <typename... Ts>
@@ -39,6 +42,7 @@ namespace ECSEngine
         ComponentManager componentManager;
         SystemManager systemManager;
         std::unordered_map<ComponentSet, EntityQuery> entityQueries;
+        Renderer renderer;
 
     private:
         template <typename T1, typename... Ts>

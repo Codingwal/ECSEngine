@@ -3,9 +3,16 @@
 #include <glad.h>
 #include <string>
 
-class Texture
+namespace ECSEngine
 {
-public:
-    GLuint id;
-    Texture(const std::string &filePath, GLuint format);
-};
+    class Texture
+    {
+    public:
+        GLuint id;
+
+    private:
+        Texture(const std::string &filePath, GLuint format);
+
+        friend class Renderer;
+    };
+}

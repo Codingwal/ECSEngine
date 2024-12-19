@@ -34,7 +34,7 @@ void validateShaderProgram(GLuint shaderProgram, const char *errorMsg)
         std::cerr << errorMsg << infoLog << "\n";
     }
 }
-void ShaderProgram::init(const std::string &vertexPath, const std::string &fragmentPath)
+void ESCEngine::ShaderProgram::init(const std::string &vertexPath, const std::string &fragmentPath)
 {
     std::string vertexShaderSourceString = readFile(vertexPath.c_str());
     const char *vertexShaderSource = vertexShaderSourceString.c_str();
@@ -61,28 +61,28 @@ void ShaderProgram::init(const std::string &vertexPath, const std::string &fragm
     glDeleteShader(fragmentShader);
 }
 
-ShaderProgram::~ShaderProgram()
+ESCEngine::ShaderProgram::~ShaderProgram()
 {
     glDeleteProgram(id);
 }
 
-void ShaderProgram::use()
+void ESCEngine::ShaderProgram::use()
 {
     assert(id != -1 && "Shader has not been correctly constructed.");
     glUseProgram(id);
 }
 
-void ShaderProgram::setBool(const char *name, bool value) const
+void ESCEngine::ShaderProgram::setBool(const char *name, bool value) const
 {
     glUniform1i(glGetUniformLocation(id, name), (int)value);
 }
 
-void ShaderProgram::setInt(const char *name, int value) const
+void ESCEngine::ShaderProgram::setInt(const char *name, int value) const
 {
     glUniform1i(glGetUniformLocation(id, name), value);
 }
 
-void ShaderProgram::setFloat(const char *name, float value) const
+void ESCEngine::ShaderProgram::setFloat(const char *name, float value) const
 {
     glUniform1f(glGetUniformLocation(id, name), (int)value);
 }

@@ -19,6 +19,7 @@ namespace ECSEngine
         void *GetComponentRef(Entity entity, ComponentID component) const;
         Archetype &GetArchetype(Entity entity);
 
+        int GetEntityCount() { return entityCount; }
         std::string EntitiesToString() const;
         std::string ArchetypesToString() const;
 

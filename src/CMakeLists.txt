@@ -6,7 +6,7 @@ add_library(Engine STATIC
             ECS/Archetype.cpp ECS/ComponentManager.cpp ECS/EntityManager.cpp ECS/SystemManager.cpp
             EntityQuery/EntityQuery.cpp
             Graphics/Renderer.cpp Graphics/glad.c Graphics/stb_image.cpp Graphics/ShaderProgram.cpp Graphics/Texture.cpp
-            World/World.cpp
+            World/World.cpp World/Systems.cpp
             Math/Float2.cpp  Math/Float3.cpp  Math/Float4.cpp  Math/Float4x4.cpp)
 
 target_link_libraries(Engine C:/Users/flori/Documents/Coding/C++/ECSEngine/lib/src/libglfw3.a)

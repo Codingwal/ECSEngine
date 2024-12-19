@@ -6,19 +6,22 @@
 #include <fstream>
 #include <sstream>
 
-class ShaderProgram
+namespace ESCEngine
 {
-public:
-    ShaderProgram() : id(-1) {}
-    ~ShaderProgram();
+    class ShaderProgram
+    {
+    public:
+        ShaderProgram() : id(-1) {}
+        ~ShaderProgram();
 
-    void init(const std::string &vertexPath, const std::string &fragmentPath);
-    void use();
+        void init(const std::string &vertexPath, const std::string &fragmentPath);
+        void use();
 
-    void setBool(const char *name, bool value) const;
-    void setInt(const char *name, int value) const;
-    void setFloat(const char *name, float value) const;
+        void setBool(const char *name, bool value) const;
+        void setInt(const char *name, int value) const;
+        void setFloat(const char *name, float value) const;
 
-public:
-    unsigned int id;
-};
+    public:
+        unsigned int id;
+    };
+}
