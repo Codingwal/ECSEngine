@@ -1,4 +1,4 @@
-#include "Math/Float4x4.hpp"
+#include "Math/Math.hpp"
 #include <math.h>
 
 Float4x4::Float4x4(Float4 _v1, Float4 _v2, Float4 _v3, Float4 _v4)
@@ -114,6 +114,18 @@ Float4x4 Float4x4::Rotate(Float4x4 mat, float angle, Float3 axis)
     result[3] = mat[3];
 
     return result;
+}
+Float4x4 Float4x4::Perspective(float angleOfView, float near, float far)
+{
+    Float4x4 mat = Float4x4();
+    float scale = 1 / tan(Math::ToRadians(angleOfView) * 0.5);
+    mat[0][0] = scale;                      //// scale the y coordinates of the projected point
+    mat[1][1] = scale;                      //// scale the y coordinates of the projected point
+    mat[2][2] = -far / (far - near);        // used to remap z to [0,1]
+    mat[3][2] = -far * near / (far - near); // used to remap z to [0,1]
+    mat[2][3] = -1;                         // set w = -z
+    mat[3][3] = 0;
+    return mat;
 }
 
 Float4 operator*(const Float4x4 &m, const Float4 &v)

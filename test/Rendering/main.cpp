@@ -20,14 +20,22 @@ int main(int argc, char **argv)
 
     World world = World();
 
-    for (int i = 0; i < 10; i++)
-    {
-        Entity entity = world.CreateEntity<Transform, TransformMatrix, PhysicsObject>();
-        world.SetComponentData(entity, Transform(Float3(0, RandomFloat(-0.9, 0.9), 0), Float3(0, 0, RandomFloat(0, 360)), Float3(RandomFloat(0.2, 0.7))));
-        world.SetComponentData(entity, PhysicsObject(Float3(RandomFloat(0, 2), 0, 0)));
-    }
+    Entity entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -5), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -10), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -15), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -20), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -25), Float3(-0, 0, 0), Float3(1)));
 
     world.systemManager.RegisterSystem<CollisionSystem>();
 
-    world.Run(100000);
+    world.Run(1000000);
 }

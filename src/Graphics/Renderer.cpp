@@ -80,7 +80,7 @@ void ECSEngine::Renderer::Init(const std::string &ressourcesFolderPath)
 
     glViewport(0, 0, WIDTH, HEIGHT);
 
-    shader.init(pathShadersFolder + DEFAULT_SHADER_VERT, pathShadersFolder + DEFAULT_SHADER_FRAG);
+    shader.Init(pathShadersFolder + DEFAULT_SHADER_VERT, pathShadersFolder + DEFAULT_SHADER_FRAG);
 
     stbi_set_flip_vertically_on_load(true);
     textures.push_back(Texture(pathImagesFolder + "container.jpg", GL_RGB));
@@ -89,9 +89,9 @@ void ECSEngine::Renderer::Init(const std::string &ressourcesFolderPath)
     vao, vbo, ebo; // vertex array object, vertex buffer object
     createVAOandVBO(&vao, &vbo, &ebo);
 
-    shader.use();
-    shader.setInt("tex1", 0);
-    shader.setInt("tex2", 1);
+    shader.Use();
+    shader.SetInt("tex1", 0);
+    shader.SetInt("tex2", 1);
 }
 
 void ECSEngine::Renderer::Update()
@@ -100,7 +100,7 @@ void ECSEngine::Renderer::Update()
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    shader.use();
+    shader.Use();
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textures.at(0).id);
@@ -109,10 +109,17 @@ void ECSEngine::Renderer::Update()
 
     glBindVertexArray(vao);
 
+    Float4x4 view = Float4x4::Identity();
+    Float4x4 projection = Float4x4::Identity();
+    view = Float4x4::Translate(view, Float3(0, -3, -3));
+    projection = Float4x4::Perspective(45, 0.1f, 100.0f);
+    shader.SetFloat4x4("projection", projection);
+
     for (const auto &obj : objects)
     {
-        GLuint transformLoc = glGetUniformLocation(shader.id, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE, obj.transformMatrix.ToColumnMajorArray().begin());
+        shader.SetFloat4x4("transform", obj.transformMatrix);
+        shader.SetFloat4x4("view", view);
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     }
 

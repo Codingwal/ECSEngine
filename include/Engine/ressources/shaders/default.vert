@@ -6,9 +6,11 @@ layout (location = 1) in vec2 vTexCoord;
 out vec2 fTexCoord;
 
 uniform mat4 transform;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-    gl_Position = transform * vec4(vPos, 1.0f);
+    gl_Position = projection * view * transform * vec4(vPos, 1.0f);
     fTexCoord = vTexCoord;
 }

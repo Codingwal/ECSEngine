@@ -22,6 +22,7 @@ public:
     static Float4x4 Translate(Float4x4 mat, const Float3 &vec);
     static Float4x4 Scale(Float4x4 mat, const Float3 &vec);
     static Float4x4 Rotate(Float4x4 mat, float angle, Float3 axis);
+    static Float4x4 Perspective(float angleOfView, float near, float far);
 
     friend Float4 operator*(const Float4x4 &m, const Float4 &v);
     friend Float4x4 operator*(const Float4x4 &lhs, const Float4x4 &rhs);
