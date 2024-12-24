@@ -7,16 +7,32 @@
 #include <string>
 #include "Math/Math.hpp"
 #include "ShaderProgram.hpp"
+#include <map>
 
 namespace ECSEngine
 {
-    // struct Mesh
-    // {
-    // };
+    struct Mesh
+    {
+        std::vector<float> vertices;
+        std::vector<int> indices;
+        Mesh(std::vector<float> _vertices, std::vector<int> _indices)
+        {
+            vertices = _vertices;
+            indices = _indices;
+        }
+    };
+
+    using MeshID = uint32_t;
+    using MaterialID = uint32_t;
+    struct RenderingInfo
+    {
+        MeshID mesh;
+        MaterialID material;
+    };
     struct Object
     {
         Float4x4 transformMatrix;
-        // Mesh mesh;
+        RenderingInfo info;
     };
     class Renderer
     {
@@ -26,7 +42,8 @@ namespace ECSEngine
         void Dispose();
         float GetTime();
         bool ShouldStop();
-        void CreateTexture();
+        // void CreateTexture();
+        // void CreateMesh();
 
     public:
         std::vector<Object> objects;
@@ -34,11 +51,14 @@ namespace ECSEngine
     private:
         GLFWwindow *window = nullptr;
         ESCEngine::ShaderProgram shader;
-        std::vector<Texture> textures;
         GLuint vao, vbo, ebo = -1; // vertex array object, vertex buffer object, element buffer object
 
+        std::vector<Texture> textures;
+        std::map<std::string, GLuint> vaos;
+    
         std::string pathRessourcesFolder;
         std::string pathShadersFolder;
         std::string pathImagesFolder;
+        std::string pathMeshesFolder;
     };
 }

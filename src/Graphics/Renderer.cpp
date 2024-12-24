@@ -8,6 +8,7 @@
 #include "Graphics/ShaderProgram.hpp"
 #include "Graphics/Texture.hpp"
 #include "Math/Math.hpp"
+#include "Utility/JsonParser.hpp"
 
 #define WIDTH 800
 #define HEIGHT 800
@@ -15,48 +16,43 @@
 #define DEFAULT_SHADER_FRAG "default.frag"
 #define DEFAULT_SHADER_VERT "default.vert"
 
-void createVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
+void CreateMesh(const std::string &fileName)
 {
-    GLfloat vertices[] =
-        {
-            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,   // Upper right corner
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,  // Lower right corner
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, // Lower left corner
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,  // Upper left corner
-        };
-    unsigned int indices[] = {
-        0, 1, 3, // first triangle
-        1, 2, 3, // second triangle
-    };
-
-    glGenVertexArrays(1, vao);
-    glGenBuffers(1, vbo);
-    glGenBuffers(1, ebo);
-
-    glBindVertexArray(*vao);
-
-    glBindBuffer(GL_ARRAY_BUFFER, *vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // The value at location 0 in the fragment shader is the position vec3
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-    // The value at location 1 in the fragment shader is the texture coords vec2
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    // unbind the vao & vbo so they are not accidentally modified
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+    // ECSEngine::JsonParser::ParseJson(fileName);
 }
+// void CreateVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
+// {
+//     glGenVertexArrays(1, vao);
+//     glGenBuffers(1, vbo);
+//     glGenBuffers(1, ebo);
+
+//     glBindVertexArray(*vao);
+
+//     glBindBuffer(GL_ARRAY_BUFFER, *vbo);
+//     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+//     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *ebo);
+//     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+//     // The value at location 0 in the fragment shader is the position vec3
+//     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
+//     glEnableVertexAttribArray(0);
+//     // The value at location 1 in the fragment shader is the texture coords vec2
+//     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
+//     glEnableVertexAttribArray(1);
+
+//     // unbind the vao & vbo so they are not accidentally modified
+//     glBindBuffer(GL_ARRAY_BUFFER, 0);
+//     glBindVertexArray(0);
+// }
 void ECSEngine::Renderer::Init(const std::string &ressourcesFolderPath)
 {
     pathRessourcesFolder = ressourcesFolderPath;
     pathShadersFolder = pathRessourcesFolder + "shaders/";
     pathImagesFolder = pathRessourcesFolder + "images/";
+    pathMeshesFolder = pathRessourcesFolder + "meshes/";
+
+    CreateMesh(pathMeshesFolder + "QuadMesh.json");
 
     glfwInit();
 
@@ -86,8 +82,7 @@ void ECSEngine::Renderer::Init(const std::string &ressourcesFolderPath)
     textures.push_back(Texture(pathImagesFolder + "container.jpg", GL_RGB));
     textures.push_back(Texture(pathImagesFolder + "awesomeface.png", GL_RGBA));
 
-    vao, vbo, ebo; // vertex array object, vertex buffer object
-    createVAOandVBO(&vao, &vbo, &ebo);
+    // CreateVAOandVBO(&vao, &vbo, &ebo);
 
     shader.Use();
     shader.SetInt("tex1", 0);

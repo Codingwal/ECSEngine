@@ -5,6 +5,8 @@
 #include "Systems.hpp"
 #include <stdlib.h>
 
+#include <Engine/Utility/JsonParser.hpp>
+
 float RandomFloat(float min, float max)
 {
     float range = max - min;
@@ -18,24 +20,34 @@ int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    World world = World();
+    ArenaAllocator arena(512); // TODO: might overflow
+    JsonData *data = JsonParser::ParseJson(arena, "C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test.json");
 
-    Entity entity = world.CreateEntity<Transform, TransformMatrix>();
-    world.SetComponentData(entity, Transform(Float3(0, 0, -5), Float3(-0, 0, 0), Float3(1)));
+    std::cout << "------------\n";
+    std::cout << "Type: " << data->type << "\n";
+    for (const auto &pair : data->value.objects)
+    {
+        std::cout << pair.first << ": " << pair.second->value.i << "\n";
+    }
 
-    entity = world.CreateEntity<Transform, TransformMatrix>();
-    world.SetComponentData(entity, Transform(Float3(0, 0, -10), Float3(-0, 0, 0), Float3(1)));
+    // World world = World();
 
-    entity = world.CreateEntity<Transform, TransformMatrix>();
-    world.SetComponentData(entity, Transform(Float3(0, 0, -15), Float3(-0, 0, 0), Float3(1)));
+    // Entity entity = world.CreateEntity<Transform, TransformMatrix>();
+    // world.SetComponentData(entity, Transform(Float3(0, 0, -5), Float3(-0, 0, 0), Float3(1)));
 
-    entity = world.CreateEntity<Transform, TransformMatrix>();
-    world.SetComponentData(entity, Transform(Float3(0, 0, -20), Float3(-0, 0, 0), Float3(1)));
+    // entity = world.CreateEntity<Transform, TransformMatrix>();
+    // world.SetComponentData(entity, Transform(Float3(0, 0, -10), Float3(-0, 0, 0), Float3(1)));
 
-    entity = world.CreateEntity<Transform, TransformMatrix>();
-    world.SetComponentData(entity, Transform(Float3(0, 0, -25), Float3(-0, 0, 0), Float3(1)));
+    // entity = world.CreateEntity<Transform, TransformMatrix>();
+    // world.SetComponentData(entity, Transform(Float3(0, 0, -15), Float3(-0, 0, 0), Float3(1)));
 
-    world.systemManager.RegisterSystem<CollisionSystem>();
+    // entity = world.CreateEntity<Transform, TransformMatrix>();
+    // world.SetComponentData(entity, Transform(Float3(0, 0, -20), Float3(-0, 0, 0), Float3(1)));
 
-    world.Run(1000000);
+    // entity = world.CreateEntity<Transform, TransformMatrix>();
+    // world.SetComponentData(entity, Transform(Float3(0, 0, -25), Float3(-0, 0, 0), Float3(1)));
+
+    // world.systemManager.RegisterSystem<CollisionSystem>();
+
+    // world.Run(1000000);
 }
