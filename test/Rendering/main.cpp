@@ -15,39 +15,34 @@ float RandomFloat(float min, float max)
     value = fmod(value, range);
     return value + min;
 }
-
+struct Int3
+{
+    int x;
+    int y;
+    int z;
+    void Serialize(JsonParser &s)
+    {
+        s.Serialize("x", x);
+        s.Serialize("y", y);
+        s.Serialize("z", z);
+    }
+};
+struct Data
+{
+    int someValue;
+    Int3 someVector;
+    void Serialize(JsonParser &s)
+    {
+        s.Serialize("someValue", someValue);
+        s.Serialize("someVector", someVector);
+    }
+};
 int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    ArenaAllocator arena(512); // TODO: might overflow
-    JsonData *data = JsonParser::ParseJson(arena, "C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test.json");
+    Data data = Data{.someValue = 5, .someVector = Int3{.x = 1, .y = 2, .z = 3}};
 
-    std::cout << "------------\n";
-    std::cout << "Type: " << data->type << "\n";
-    for (const auto &pair : data->value.objects)
-    {
-        std::cout << pair.first << ": " << pair.second->value.i << "\n";
-    }
-
-    // World world = World();
-
-    // Entity entity = world.CreateEntity<Transform, TransformMatrix>();
-    // world.SetComponentData(entity, Transform(Float3(0, 0, -5), Float3(-0, 0, 0), Float3(1)));
-
-    // entity = world.CreateEntity<Transform, TransformMatrix>();
-    // world.SetComponentData(entity, Transform(Float3(0, 0, -10), Float3(-0, 0, 0), Float3(1)));
-
-    // entity = world.CreateEntity<Transform, TransformMatrix>();
-    // world.SetComponentData(entity, Transform(Float3(0, 0, -15), Float3(-0, 0, 0), Float3(1)));
-
-    // entity = world.CreateEntity<Transform, TransformMatrix>();
-    // world.SetComponentData(entity, Transform(Float3(0, 0, -20), Float3(-0, 0, 0), Float3(1)));
-
-    // entity = world.CreateEntity<Transform, TransformMatrix>();
-    // world.SetComponentData(entity, Transform(Float3(0, 0, -25), Float3(-0, 0, 0), Float3(1)));
-
-    // world.systemManager.RegisterSystem<CollisionSystem>();
-
-    // world.Run(1000000);
+    JsonParser jsonParser("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
+    jsonParser.Serialize(data);
 }

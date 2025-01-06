@@ -7,7 +7,7 @@ add_library(Engine STATIC
             EntityQuery/EntityQuery.cpp
             Graphics/Renderer.cpp Graphics/glad.c Graphics/stb_image.cpp Graphics/ShaderProgram.cpp Graphics/Texture.cpp
             Math/Float2.cpp  Math/Float3.cpp  Math/Float4.cpp  Math/Float4x4.cpp
-            Utility/ArenaAllocator.cpp
+            Utility/ArenaAllocator.cpp Utility/JsonParser.cpp
             World/World.cpp World/Systems.cpp
             )
 
