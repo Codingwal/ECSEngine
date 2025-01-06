@@ -5,7 +5,7 @@
 #include "Systems.hpp"
 #include <stdlib.h>
 
-#include <Engine/Utility/JsonParser.hpp>
+#include <Engine/Utility/Serializer.hpp>
 
 float RandomFloat(float min, float max)
 {
@@ -20,7 +20,7 @@ struct Int3
     int x;
     int y;
     int z;
-    void Serialize(JsonParser &s)
+    void Serialize(Serializer &s)
     {
         s.Serialize("x", x);
         s.Serialize("y", y);
@@ -29,9 +29,9 @@ struct Int3
 };
 struct Data
 {
-    int someValue;
+    float someValue;
     Int3 someVector;
-    void Serialize(JsonParser &s)
+    void Serialize(Serializer &s)
     {
         s.Serialize("someValue", someValue);
         s.Serialize("someVector", someVector);
@@ -41,8 +41,8 @@ int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    Data data = Data{.someValue = 5, .someVector = Int3{.x = 1, .y = 2, .z = 3}};
+    Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}};
 
-    JsonParser jsonParser("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
+    Serializer jsonParser("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
     jsonParser.Serialize(data);
 }

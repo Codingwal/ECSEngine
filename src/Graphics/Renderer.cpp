@@ -8,7 +8,6 @@
 #include "Graphics/ShaderProgram.hpp"
 #include "Graphics/Texture.hpp"
 #include "Math/Math.hpp"
-#include "Utility/JsonParser.hpp"
 
 #define WIDTH 800
 #define HEIGHT 800
