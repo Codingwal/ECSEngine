@@ -1,4 +1,5 @@
 #include "Utility/JSONDeserializer.hpp"
+#include <sstream>
 
 namespace ECSEngine
 {
@@ -34,7 +35,7 @@ namespace ECSEngine
     {
         if (str.at(pos++) != c)
         {
-            std::cerr << "Expected char '" << c << "' but found '" << str.at(pos - 1) << "'\n";
+            throw std::runtime_error(Formatter() << "Expected char '" << c << "' but found '" << str.at(pos - 1) << "'\n");
         }
     }
     void JSONDeserializer::PrintStringToParse()
