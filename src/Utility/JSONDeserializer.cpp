@@ -116,7 +116,7 @@ namespace ECSEngine
             actualType = ObjectType::ARRAY;
             break;
         default:
-            if (std::isdigit(str[pos]))
+            if (std::isdigit(str[pos]) || str[pos] == '-')
                 actualType = ObjectType::NUMBER;
             else
                 Error(Formatter() << "Expected " << TypeToString(expectedType) << " but found an invalid object");
