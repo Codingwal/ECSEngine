@@ -21,7 +21,7 @@ struct Int3
     int x;
     int y;
     int z;
-    void Serialize(JSONSerializer &s)
+    void Serialize(JSONSerializer &s) const
     {
         s.Serialize("x", x);
         s.Serialize("y", y);
@@ -38,7 +38,7 @@ struct Data
 {
     int someValue;
     Int3 someVector;
-    void Serialize(JSONSerializer &s)
+    void Serialize(JSONSerializer &s) const
     {
         s.Serialize("someValue", someValue);
         s.Serialize("someVector", someVector);

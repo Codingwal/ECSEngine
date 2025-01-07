@@ -1,7 +1,7 @@
 namespace ECSEngine
 {
     template <typename T>
-    inline void JSONSerializer::Serialize(T &data)
+    inline void JSONSerializer::Serialize(const T &data)
     {
         file << "{\n";
         data.Serialize(*this);
@@ -9,7 +9,7 @@ namespace ECSEngine
         file << "\n}";
     }
     template <typename T>
-    inline void JSONSerializer::Serialize(std::string key, T &value)
+    inline void JSONSerializer::Serialize(const std::string &key, const T &value)
     {
         file << "\"" << key << "\": ";
         Serialize(value);

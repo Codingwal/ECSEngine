@@ -9,21 +9,23 @@ namespace ECSEngine
     class JSONDeserializer
     {
     public:
-        JSONDeserializer(std::string fileName);
+        JSONDeserializer(const std::string &fileName);
 
         template <typename T>
         void Deserialize(T &dest);
 
         void Deserialize(int &dest);
         void Deserialize(float &dest);
+        void Deserialize(std::string &dest);
 
         template <typename T>
-        void Deserialize(std::string key, T &dest);
+        void Deserialize(const std::string &key, T &dest);
 
     private:
         void SkipWhitespaces();
         void Consume(char c);
         void PrintStringToParse();
+        void Error(std::string msg);
 
     private:
         std::string str;

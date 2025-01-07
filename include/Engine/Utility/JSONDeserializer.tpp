@@ -13,7 +13,7 @@ namespace ECSEngine
     }
 
     template <typename T>
-    inline void JSONDeserializer::Deserialize(std::string key, T &dest)
+    inline void JSONDeserializer::Deserialize(const std::string &key, T &dest)
     {
         SkipWhitespaces();
 
@@ -33,11 +33,12 @@ namespace ECSEngine
 
         if (k != key)
         {
-            throw std::runtime_error(Formatter() << "Expected key \"" << key << "\" but found \"" << k << "\"\n");
+            Error(Formatter() << "Expected key \"" << key << "\" but found \"" << k << "\"\n");
         }
 
         Consume('"');
         Consume(':');
+        SkipWhitespaces();
         Deserialize(dest);
     }
 }

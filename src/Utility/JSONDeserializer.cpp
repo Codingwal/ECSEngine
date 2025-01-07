@@ -3,7 +3,7 @@
 
 namespace ECSEngine
 {
-    JSONDeserializer::JSONDeserializer(std::string fileName)
+    JSONDeserializer::JSONDeserializer(const std::string &fileName)
     {
         std::ifstream file(fileName);
         std::string line;
@@ -15,15 +15,34 @@ namespace ECSEngine
     }
     void JSONDeserializer::Deserialize(int &dest)
     {
+        if (str[pos] == '\"')
+            Error(Formatter() << "Expected integer but found string");
+
         size_t valueSize;
         dest = std::stoi(str.substr(pos), &valueSize);
         pos += valueSize;
+
+        if (str[pos] == '.')
+            Error(Formatter() << "Expected integer but found floating point value");
     }
     void JSONDeserializer::Deserialize(float &dest)
     {
+        if (str[pos] == '\"')
+            Error(Formatter() << "Expected floating point value but found string");
+
         size_t valueSize;
         dest = std::stof(str.substr(pos), &valueSize);
         pos += valueSize;
+    }
+    void JSONDeserializer::Deserialize(std::string &dest)
+    {
+        Consume('\"');
+        dest.clear();
+        for (; str[pos] != '\"'; pos++)
+        {
+            dest.push_back(str[pos]);
+        }
+        Consume('\"');
     }
     void JSONDeserializer::SkipWhitespaces()
     {
@@ -35,11 +54,16 @@ namespace ECSEngine
     {
         if (str.at(pos++) != c)
         {
-            throw std::runtime_error(Formatter() << "Expected char '" << c << "' but found '" << str.at(pos - 1) << "'\n");
+            Error(Formatter() << "Expected char '" << c << "' but found '" << str.at(pos - 1) << "'");
         }
     }
     void JSONDeserializer::PrintStringToParse()
     {
         std::cout << "String to parse: \"" << &str[pos] << "\"\n";
+    }
+    void JSONDeserializer::Error(std::string msg)
+    {
+        throw std::runtime_error(Formatter() << "ERROR: JSONDeserializer: " << msg << " at position " << pos << ".\n"
+                                             << "String left to parse: \"" << &str[pos] << "\"\n");
     }
 }

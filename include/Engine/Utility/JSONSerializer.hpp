@@ -9,16 +9,18 @@ namespace ECSEngine
     class JSONSerializer
     {
     public:
-        JSONSerializer(std::string fileName);
+        JSONSerializer(const std::string &fileName);
         ~JSONSerializer();
 
         template <typename T>
-        void Serialize(T &data);
+        void Serialize(const T &data);
+
         void Serialize(int data);
         void Serialize(float data);
+        void Serialize(const std::string &data);
 
         template <typename T>
-        void Serialize(std::string key, T &data);
+        void Serialize(const std::string &key, const T &data);
 
     private:
         std::ofstream file;

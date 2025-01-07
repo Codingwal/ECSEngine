@@ -1,8 +1,8 @@
 {
-"someValue": 5,
-"someVector": {
-"x": 1,
-"y": 2,
-"z": 3
-}
+    "someValue": "moin moin moin",
+    "someVector": {
+        "x": 1,
+        "y": 2,
+        "z": 3
+    }
 }

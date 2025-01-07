@@ -2,7 +2,7 @@
 
 namespace ECSEngine
 {
-    JSONSerializer::JSONSerializer(std::string fileName)
+    JSONSerializer::JSONSerializer(const std::string &fileName)
     {
         file.open(fileName, std::ios::binary);
     }
@@ -17,5 +17,9 @@ namespace ECSEngine
     void JSONSerializer::Serialize(float value)
     {
         file << std::to_string(value);
+    }
+    void JSONSerializer::Serialize(const std::string &value)
+    {
+        file << '\"' << value << '\"';
     }
 }
