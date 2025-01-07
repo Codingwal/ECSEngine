@@ -17,15 +17,28 @@ namespace ECSEngine
         void Deserialize(int &dest);
         void Deserialize(float &dest);
         void Deserialize(std::string &dest);
+        void Deserialize(bool &dest);
 
         template <typename T>
         void Deserialize(const std::string &key, T &dest);
 
     private:
-        void SkipWhitespaces();
+        enum ObjectType
+        {
+            OBJECT,
+            INT,
+            FLOAT,
+            STRING,
+            BOOL,
+        };
+
+    private:
+        void
+        SkipWhitespaces();
         void Consume(char c);
         void PrintStringToParse();
         void Error(std::string msg);
+        void CheckType(ObjectType expectedType);
 
     private:
         std::string str;

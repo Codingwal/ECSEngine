@@ -5,7 +5,8 @@ namespace ECSEngine
     template <typename T>
     inline void JSONDeserializer::Deserialize(T &dest)
     {
-        SkipWhitespaces();
+        CheckType(ObjectType::OBJECT);
+
         Consume('{');
         dest.Deserialize(*this);
         SkipWhitespaces();

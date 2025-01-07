@@ -36,24 +36,27 @@ struct Int3
 };
 struct Data
 {
-    int someValue;
+    float someValue;
     Int3 someVector;
+    bool myBool;
     void Serialize(JSONSerializer &s) const
     {
         s.Serialize("someValue", someValue);
         s.Serialize("someVector", someVector);
+        s.Serialize("myBool", myBool);
     }
     void Deserialize(JSONDeserializer &d)
     {
         d.Deserialize("someValue", someValue);
         d.Deserialize("someVector", someVector);
+        d.Deserialize("myBool", myBool);
     }
 };
 int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    // Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}};
+    // Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false};
     // JSONSerializer s("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
     // s.Serialize(data);
     // s.~JSONSerializer();
@@ -63,5 +66,5 @@ int main(int argc, char **argv)
     d.Deserialize(data);
 
     std::cout << "\n===========================\n\n"
-              << data.someValue << "; (" << data.someVector.x << ", " << data.someVector.y << ", " << data.someVector.z << ")\n";
+              << data.someValue << "; (" << data.someVector.x << ", " << data.someVector.y << ", " << data.someVector.z << "); " << data.myBool << "\n";
 }

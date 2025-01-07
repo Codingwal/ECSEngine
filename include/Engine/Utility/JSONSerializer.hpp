@@ -18,6 +18,7 @@ namespace ECSEngine
         void Serialize(int data);
         void Serialize(float data);
         void Serialize(const std::string &data);
+        void Serialize(bool data);
 
         template <typename T>
         void Serialize(const std::string &key, const T &data);

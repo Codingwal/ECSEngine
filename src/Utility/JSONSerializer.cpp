@@ -12,14 +12,21 @@ namespace ECSEngine
     }
     void JSONSerializer::Serialize(int value)
     {
-        file << std::to_string(value);
+        file << value;
     }
     void JSONSerializer::Serialize(float value)
     {
-        file << std::to_string(value);
+        file << value;
     }
     void JSONSerializer::Serialize(const std::string &value)
     {
         file << '\"' << value << '\"';
+    }
+    void JSONSerializer::Serialize(bool value)
+    {
+        if (value)
+            file << "true";
+        else
+            file << "false";
     }
 }
