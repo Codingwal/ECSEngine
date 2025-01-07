@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 namespace ECSEngine
 {
@@ -19,6 +20,8 @@ namespace ECSEngine
         void Serialize(float data);
         void Serialize(const std::string &data);
         void Serialize(bool data);
+        template <typename T>
+        void Serialize(const std::vector<T> &data);
 
         template <typename T>
         void Serialize(const std::string &key, const T &data);

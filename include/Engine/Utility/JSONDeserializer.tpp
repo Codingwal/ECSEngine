@@ -18,7 +18,6 @@ namespace ECSEngine
     {
         SkipWhitespaces();
 
-        // Skip ',' if present
         if (str.at(pos) == ',')
             pos++;
 
@@ -41,5 +40,25 @@ namespace ECSEngine
         Consume(':');
         SkipWhitespaces();
         Deserialize(dest);
+    }
+    template <typename T>
+    inline void JSONDeserializer::Deserialize(std::vector<T> &dest)
+    {
+        CheckType(ObjectType::ARRAY);
+
+        Consume('[');
+        dest.clear();
+        SkipWhitespaces();
+        while (str[pos] != ']')
+        {
+            dest.resize(dest.size() + 1); // Make space for a new element
+            Deserialize(dest[dest.size() - 1]);
+
+            if (str[pos] == ',')
+                pos++;
+
+            SkipWhitespaces();
+        }
+        Consume(']');
     }
 }

@@ -15,7 +15,7 @@ namespace ECSEngine
     }
     void JSONDeserializer::Deserialize(int &dest)
     {
-        CheckType(ObjectType::INT);
+        CheckType(ObjectType::NUMBER);
 
         size_t valueSize;
         dest = std::stoi(str.substr(pos), &valueSize);
@@ -26,7 +26,7 @@ namespace ECSEngine
     }
     void JSONDeserializer::Deserialize(float &dest)
     {
-        CheckType(ObjectType::FLOAT);
+        CheckType(ObjectType::NUMBER);
 
         size_t valueSize;
         dest = std::stof(str.substr(pos), &valueSize);
@@ -46,7 +46,7 @@ namespace ECSEngine
     }
     void JSONDeserializer::Deserialize(bool &dest)
     {
-        CheckType(ObjectType::BOOL);
+        CheckType(ObjectType::BOOLEAN);
 
         std::string tmp;
         for (; std::isalpha(str[pos]); pos++)
@@ -85,14 +85,14 @@ namespace ECSEngine
             {
             case ObjectType::OBJECT:
                 return "object";
-            case ObjectType::INT:
-                return "integer";
-            case ObjectType::FLOAT:
-                return "floating point value";
+            case ObjectType::NUMBER:
+                return "number";
             case ObjectType::STRING:
                 return "string";
-            case ObjectType::BOOL:
+            case ObjectType::BOOLEAN:
                 return "boolean";
+            case ObjectType::ARRAY:
+                return "array";
             default:
                 throw std::exception();
             }
@@ -107,20 +107,22 @@ namespace ECSEngine
             actualType = ObjectType::STRING;
             break;
         case 't':
-            actualType = ObjectType::BOOL;
+            actualType = ObjectType::BOOLEAN;
             break;
         case 'f':
-            actualType = ObjectType::BOOL;
+            actualType = ObjectType::BOOLEAN;
+            break;
+        case '[':
+            actualType = ObjectType::ARRAY;
             break;
         default:
             if (std::isdigit(str[pos]))
-                actualType = ObjectType::INT;
+                actualType = ObjectType::NUMBER;
             else
                 Error(Formatter() << "Expected " << TypeToString(expectedType) << " but found an invalid object");
         }
 
-        if (actualType != expectedType                                                // Expected a different type than actually present
-            && !(actualType == ObjectType::INT && expectedType == ObjectType::FLOAT)) // Floats and integers are not differentiated at this point
+        if (actualType != expectedType)
             Error(Formatter() << "Expected " << TypeToString(expectedType) << " but found " << TypeToString(actualType));
     }
     void JSONDeserializer::Error(std::string msg)

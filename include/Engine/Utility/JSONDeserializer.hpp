@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 namespace ECSEngine
 {
@@ -18,6 +19,8 @@ namespace ECSEngine
         void Deserialize(float &dest);
         void Deserialize(std::string &dest);
         void Deserialize(bool &dest);
+        template <typename T>
+        void Deserialize(std::vector<T> &dest);
 
         template <typename T>
         void Deserialize(const std::string &key, T &dest);
@@ -26,10 +29,10 @@ namespace ECSEngine
         enum ObjectType
         {
             OBJECT,
-            INT,
-            FLOAT,
+            NUMBER,
             STRING,
-            BOOL,
+            BOOLEAN,
+            ARRAY
         };
 
     private:

@@ -39,24 +39,27 @@ struct Data
     float someValue;
     Int3 someVector;
     bool myBool;
+    std::vector<float> array;
     void Serialize(JSONSerializer &s) const
     {
         s.Serialize("someValue", someValue);
         s.Serialize("someVector", someVector);
         s.Serialize("myBool", myBool);
+        s.Serialize("array", array);
     }
     void Deserialize(JSONDeserializer &d)
     {
         d.Deserialize("someValue", someValue);
         d.Deserialize("someVector", someVector);
         d.Deserialize("myBool", myBool);
+        d.Deserialize("array", array);
     }
 };
 int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    // Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false};
+    // Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false, .array = {7.3, 1.2, 44.5, 7, 3.23142}};
     // JSONSerializer s("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
     // s.Serialize(data);
     // s.~JSONSerializer();
@@ -67,4 +70,8 @@ int main(int argc, char **argv)
 
     std::cout << "\n===========================\n\n"
               << data.someValue << "; (" << data.someVector.x << ", " << data.someVector.y << ", " << data.someVector.z << "); " << data.myBool << "\n";
+    for (float e : data.array)
+    {
+        std::cout << e << ", ";
+    }
 }
