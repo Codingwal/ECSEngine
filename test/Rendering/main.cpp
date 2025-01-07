@@ -5,9 +5,6 @@
 #include "Systems.hpp"
 #include <stdlib.h>
 
-#include <Engine/Utility/JSONSerializer.hpp>
-#include <Engine/Utility/JSONDeserializer.hpp>
-
 float RandomFloat(float min, float max)
 {
     float range = max - min;
@@ -16,62 +13,29 @@ float RandomFloat(float min, float max)
     value = fmod(value, range);
     return value + min;
 }
-struct Int3
-{
-    int x;
-    int y;
-    int z;
-    void Serialize(JSONSerializer &s) const
-    {
-        s.Serialize("x", x);
-        s.Serialize("y", y);
-        s.Serialize("z", z);
-    }
-    void Deserialize(JSONDeserializer &d)
-    {
-        d.Deserialize("x", x);
-        d.Deserialize("y", y);
-        d.Deserialize("z", z);
-    }
-};
-struct Data
-{
-    float someValue;
-    Int3 someVector;
-    bool myBool;
-    std::vector<float> array;
-    void Serialize(JSONSerializer &s) const
-    {
-        s.Serialize("someValue", someValue);
-        s.Serialize("someVector", someVector);
-        s.Serialize("myBool", myBool);
-        s.Serialize("array", array);
-    }
-    void Deserialize(JSONDeserializer &d)
-    {
-        d.Deserialize("someValue", someValue);
-        d.Deserialize("someVector", someVector);
-        d.Deserialize("myBool", myBool);
-        d.Deserialize("array", array);
-    }
-};
+
 int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false, .array = {7.3, 1.2, 44.5, 7, 3.23142}};
-    JSONSerializer s("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
-    s.Serialize(data);
-    s.~JSONSerializer();
+    World world = World();
 
-    // Data data;
-    JSONDeserializer d("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
-    d.Deserialize(data);
+    Entity entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -5), Float3(-0, 0, 0), Float3(1)));
 
-    std::cout << "\n===========================\n\n"
-              << data.someValue << "; (" << data.someVector.x << ", " << data.someVector.y << ", " << data.someVector.z << "); " << data.myBool << "\n";
-    for (float e : data.array)
-    {
-        std::cout << e << ", ";
-    }
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -10), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -15), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -20), Float3(-0, 0, 0), Float3(1)));
+
+    entity = world.CreateEntity<Transform, TransformMatrix>();
+    world.SetComponentData(entity, Transform(Float3(0, 0, -25), Float3(-0, 0, 0), Float3(1)));
+
+    world.systemManager.RegisterSystem<CollisionSystem>();
+
+    world.Run(1000000);
 }

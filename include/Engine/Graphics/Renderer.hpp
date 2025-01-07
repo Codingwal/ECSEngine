@@ -8,6 +8,8 @@
 #include "Math/Math.hpp"
 #include "ShaderProgram.hpp"
 #include <map>
+#include "Utility/JSONSerializer.hpp"
+#include "Utility/JSONDeserializer.hpp"
 
 namespace ECSEngine
 {
@@ -15,10 +17,21 @@ namespace ECSEngine
     {
         std::vector<float> vertices;
         std::vector<int> indices;
+        Mesh() {}
         Mesh(std::vector<float> _vertices, std::vector<int> _indices)
         {
             vertices = _vertices;
             indices = _indices;
+        }
+        void Serialize(JSONSerializer &s) const
+        {
+            s.Serialize("vertices", vertices);
+            s.Serialize("indices", indices);
+        }
+        void Deserialize(JSONDeserializer &d)
+        {
+            d.Deserialize("vertices", vertices);
+            d.Deserialize("indices", indices);
         }
     };
 
@@ -55,7 +68,7 @@ namespace ECSEngine
 
         std::vector<Texture> textures;
         std::map<std::string, GLuint> vaos;
-    
+
         std::string pathRessourcesFolder;
         std::string pathShadersFolder;
         std::string pathImagesFolder;

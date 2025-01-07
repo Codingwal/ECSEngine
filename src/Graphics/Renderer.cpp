@@ -17,7 +17,10 @@
 
 void CreateMesh(const std::string &fileName)
 {
-    // ECSEngine::JsonParser::ParseJson(fileName);
+    ECSEngine::Mesh mesh;
+    ECSEngine::JSONDeserializer(fileName).Deserialize(mesh);
+
+    
 }
 // void CreateVAOandVBO(GLuint *vao, GLuint *vbo, GLuint *ebo)
 // {
