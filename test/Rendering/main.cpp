@@ -59,12 +59,12 @@ int main(int argc, char **argv)
 {
     using namespace ECSEngine;
 
-    // Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false, .array = {7.3, 1.2, 44.5, 7, 3.23142}};
-    // JSONSerializer s("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
-    // s.Serialize(data);
-    // s.~JSONSerializer();
+    Data data = Data{.someValue = 5.67483, .someVector = Int3{.x = 1, .y = 2, .z = 3}, .myBool = false, .array = {7.3, 1.2, 44.5, 7, 3.23142}};
+    JSONSerializer s("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
+    s.Serialize(data);
+    s.~JSONSerializer();
 
-    Data data;
+    // Data data;
     JSONDeserializer d("C:/Users/flori/Documents/Coding/C++/ECSEngine/include/Engine/ressources/meshes/Test2.json");
     d.Deserialize(data);
 
